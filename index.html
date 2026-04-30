@@ -126,6 +126,32 @@
     .role-btn:hover { border-color: var(--green); color: var(--black); }
     .role-btn.active { background: var(--black); border-color: var(--black); color: var(--white); }
 
+    .role-bar-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--grey-border);
+      margin: 0 4px;
+      flex-shrink: 0;
+    }
+
+    .copy-link-btn {
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--green-light);
+      background: var(--green-pale);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .copy-link-btn:hover { background: var(--green-light); color: var(--black); }
+    .copy-link-btn.copied { background: var(--green); color: var(--white); border-color: var(--green); }
+
     /* ── LAYOUT ── */
     main { padding-top: 114px; }
 
@@ -503,6 +529,45 @@
     .cert-highlight {
       border-color: var(--green-light);
       background: var(--green-pale);
+    }
+
+    /* ── TOOLS ── */
+    .tools-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tool-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--white);
+      border: 1px solid var(--grey-border);
+      border-radius: 100px;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      cursor: default;
+    }
+
+    .tool-chip:hover {
+      border-color: var(--green);
+      box-shadow: 0 2px 12px rgba(143,168,136,0.15);
+      transform: translateY(-1px);
+    }
+
+    .tool-icon {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .tool-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--grey-dark);
+      white-space: nowrap;
     }
 
     /* ── WORKS ── */
@@ -921,6 +986,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
+    <li><a href="#tools">Tools</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#works">Works</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -937,6 +1003,8 @@
   <button class="role-btn" data-role="guest">Guest Experience</button>
   <button class="role-btn" data-role="healthcare">Healthcare VA</button>
   <button class="role-btn" data-role="marketing">Marketing Manager</button>
+  <div class="role-bar-divider"></div>
+  <button class="copy-link-btn" id="copyLinkBtn" onclick="copyRoleLink()">🔗 Copy Link</button>
 </div>
 
 <main>
@@ -1051,6 +1119,16 @@
   <div class="section-rule"></div>
   <h2 class="section-title">What I Bring to the Table</h2>
   <div class="skills-grid" id="skillsGrid"></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TOOLS -->
+<section id="tools" class="fade-up">
+  <p class="section-label">Tools & Platforms</p>
+  <div class="section-rule"></div>
+  <h2 class="section-title">What I Work With</h2>
+  <div class="tools-grid" id="toolsGrid"></div>
 </section>
 
 <hr class="section-divider">
@@ -1414,36 +1492,74 @@ const DEFAULT_DATA = {
   skillCategories: [
     {
       label: "Operations & Administration",
+      roles: ["all", "property", "coordinator", "va", "guest", "healthcare"],
       pills: ["Inbox & Calendar Management", "Task Prioritization", "Documentation", "Digital File Organization", "Process Improvement", "SOP Creation", "Reporting & Analytics"]
     },
     {
       label: "Property & STR Management",
+      roles: ["property", "guest"],
       pills: ["Work Order Management", "Vendor Coordination", "Tenant Communication", "Turnover Scheduling", "Inspection Coordination", "Airbnb / VRBO Support", "Maintenance Tracking"]
     },
     {
       label: "CRM & Communication",
+      roles: ["all", "va", "coordinator", "guest", "marketing", "healthcare"],
       pills: ["CRM Data Entry & Upkeep", "Client Follow-ups", "Issue Escalation", "Complaint Resolution", "Email Campaigns", "Onboarding Support", "Relationship Management"]
     },
     {
-      label: "Project Management Tools",
-      pills: ["Asana", "ClickUp", "Trello", "Google Workspace", "Slack", "Zoom", "Microsoft Office", "Notion"]
-    },
-    {
-      label: "Marketing & Outreach",
-      pills: ["Social Media Management", "Lead Generation", "Facebook Ads", "Google Ads", "LinkedIn Outreach", "Content Strategy", "Copywriting", "Google My Business"]
+      label: "Project Coordination",
+      roles: ["coordinator", "va", "property", "healthcare"],
+      pills: ["Workflow Management", "Cross-functional Coordination", "Vendor Management", "Timeline Tracking", "Meeting Facilitation", "Action Item Follow-up", "Status Reporting"]
     },
     {
       label: "Healthcare Administration",
+      roles: ["healthcare"],
       pills: ["Insurance Verification", "Prior Authorizations (PT & Podiatry)", "Virtual Receptionist", "Appointment Scheduling", "Patient Communication", "EHR Systems", "HIPAA Compliance", "Medical Records Management", "Provider Coordination"]
     },
     {
       label: "Digital Marketing",
+      roles: ["marketing"],
       pills: ["Meta Ads (FB & IG)", "LinkedIn Marketing", "Google My Business", "Email Campaigns", "Sales Funnels", "SEO Content Writing", "Campaign Tracking", "WordPress", "Lead Generation", "CRM Database Management"]
     },
     {
+      label: "Content & Brand",
+      roles: ["marketing", "coordinator"],
+      pills: ["Social Media Management", "Content Strategy", "Copywriting", "Brand Consistency", "Canva Design", "Campaign Planning", "Audience Engagement"]
+    },
+    {
       label: "Core Competencies",
+      roles: ["all", "property", "coordinator", "va", "guest", "healthcare", "marketing"],
       pills: ["Remote Work Excellence", "High Attention to Detail", "Any Timezone Availability", "Multi-tasking", "Recruiting", "Business Development", "Team Coordination", "C2 English (85/100)"]
     }
+  ],
+
+  tools: [
+    { name: "Google Workspace", domain: "workspace.google.com", roles: ["all", "property", "coordinator", "va", "guest", "healthcare", "marketing"] },
+    { name: "Gmail", domain: "gmail.com", roles: ["all", "property", "coordinator", "va", "guest", "healthcare", "marketing"] },
+    { name: "Google Drive", domain: "drive.google.com", roles: ["all", "property", "coordinator", "va", "guest", "healthcare", "marketing"] },
+    { name: "Google Sheets", domain: "sheets.google.com", roles: ["all", "property", "coordinator", "va", "healthcare", "marketing"] },
+    { name: "Google Meet", domain: "meet.google.com", roles: ["all", "property", "coordinator", "va", "healthcare", "marketing"] },
+    { name: "Slack", domain: "slack.com", roles: ["all", "property", "coordinator", "va", "guest", "marketing"] },
+    { name: "Zoom", domain: "zoom.us", roles: ["all", "va", "coordinator", "healthcare", "marketing"] },
+    { name: "Canva", domain: "canva.com", roles: ["all", "marketing", "coordinator", "va"] },
+    { name: "Notion", domain: "notion.so", roles: ["coordinator", "va", "property"] },
+    { name: "Asana", domain: "asana.com", roles: ["coordinator", "va", "property"] },
+    { name: "ClickUp", domain: "clickup.com", roles: ["coordinator", "va"] },
+    { name: "Trello", domain: "trello.com", roles: ["coordinator", "va"] },
+    { name: "Monday.com", domain: "monday.com", roles: ["coordinator", "va"] },
+    { name: "Airtable", domain: "airtable.com", roles: ["coordinator", "va", "property"] },
+    { name: "HubSpot", domain: "hubspot.com", roles: ["marketing", "va", "coordinator"] },
+    { name: "Microsoft Office", domain: "microsoft.com", roles: ["all", "va", "coordinator", "healthcare"] },
+    { name: "Loom", domain: "loom.com", roles: ["coordinator", "va", "marketing"] },
+    { name: "Airbnb", domain: "airbnb.com", roles: ["property", "guest"] },
+    { name: "VRBO", domain: "vrbo.com", roles: ["property", "guest"] },
+    { name: "WhatsApp Business", domain: "whatsapp.com", roles: ["all", "property", "guest", "va"] },
+    { name: "Meta Ads Manager", domain: "facebook.com", roles: ["marketing"] },
+    { name: "LinkedIn", domain: "linkedin.com", roles: ["marketing", "coordinator"] },
+    { name: "Google Ads", domain: "ads.google.com", roles: ["marketing"] },
+    { name: "Google My Business", domain: "business.google.com", roles: ["marketing"] },
+    { name: "WordPress", domain: "wordpress.com", roles: ["marketing"] },
+    { name: "Mailchimp", domain: "mailchimp.com", roles: ["marketing"] },
+    { name: "Dropbox", domain: "dropbox.com", roles: ["va", "coordinator", "property"] }
   ],
 
   works: [
@@ -1453,7 +1569,8 @@ const DEFAULT_DATA = {
       title: "Instagram Content Suite — Suspending Time Medical Aesthetics",
       desc: "Produced a series of polished Instagram posts for a medical aesthetics brand — promotional graphics, educational content, and quote cards designed to build brand trust and drive consultation bookings.",
       img: "https://design.canva.ai/8tUD8djNKy2nogG",
-      link: "https://www.canva.com/d/G0U2dIymJUkO0rX"
+      link: "https://www.canva.com/d/G0U2dIymJUkO0rX",
+      roles: ["marketing", "coordinator"]
     },
     {
       emoji: "📋",
@@ -1461,7 +1578,8 @@ const DEFAULT_DATA = {
       title: "Client Bookings SOP Handbook — Suspending Time (16 pages)",
       desc: "Designed and structured a comprehensive Standard Operating Procedures handbook covering client booking flows, appointment protocols, and team workflows for a medical aesthetics clinic.",
       img: "https://design.canva.ai/_MESxlByXp62xHo",
-      link: "https://www.canva.com/d/3N9f8YInhkB8uhe"
+      link: "https://www.canva.com/d/3N9f8YInhkB8uhe",
+      roles: ["coordinator", "va", "property", "healthcare"]
     },
     {
       emoji: "📖",
@@ -1469,7 +1587,8 @@ const DEFAULT_DATA = {
       title: "Educational Instagram Carousel — 5 Things to Know Before Fillers",
       desc: "Created a 6-slide educational carousel for a medical aesthetics client to establish authority, educate potential patients, and drive engagement through clean, informative visuals.",
       img: "https://design.canva.ai/qqe5GefLzS_kUcl",
-      link: "https://www.canva.com/d/OMtyFfP3ns1dhKJ"
+      link: "https://www.canva.com/d/OMtyFfP3ns1dhKJ",
+      roles: ["marketing"]
     },
     {
       emoji: "🔄",
@@ -1477,7 +1596,8 @@ const DEFAULT_DATA = {
       title: "Lead Follow-Up Workflow Infographic — Suspending Time",
       desc: "Built a visual workflow infographic mapping the full client journey from first inquiry to confirmed booking — used as an internal operations reference for the sales and admin team.",
       img: "https://design.canva.ai/16oDm1bPfd4EcFj",
-      link: "https://www.canva.com/d/YSs040pyxKevoHb"
+      link: "https://www.canva.com/d/YSs040pyxKevoHb",
+      roles: ["marketing", "coordinator"]
     },
     {
       emoji: "🗂️",
@@ -1485,7 +1605,8 @@ const DEFAULT_DATA = {
       title: "Full Template System — SRP Client (37 Pages)",
       desc: "Developed a 37-page branded template system for a client, including document templates, reporting formats, and communication frameworks built for consistent team use at scale.",
       img: "https://design.canva.ai/dJcmjSKB3F-qmvw",
-      link: "https://www.canva.com/d/3gMhXQrqfGc-7IQ"
+      link: "https://www.canva.com/d/3gMhXQrqfGc-7IQ",
+      roles: ["coordinator", "va"]
     },
     {
       emoji: "🏢",
@@ -1493,7 +1614,8 @@ const DEFAULT_DATA = {
       title: "Full Template System — Jansson LLC (42 Pages)",
       desc: "Produced an extensive 42-page operations template system for Jansson LLC covering internal documents, client-facing materials, and workflow trackers across multiple departments.",
       img: "https://design.canva.ai/S9Ma92zr1PmQ76x",
-      link: "https://www.canva.com/d/4QRmDpen7UsI_nS"
+      link: "https://www.canva.com/d/4QRmDpen7UsI_nS",
+      roles: ["coordinator", "va", "marketing"]
     },
     {
       emoji: "🌐",
@@ -1501,7 +1623,8 @@ const DEFAULT_DATA = {
       title: "Website Design Mockup — Jansson LLC",
       desc: "Designed a multi-page website layout mockup for Jansson LLC including homepage, services pages, and industry-specific sections — used as a visual brief for development handoff.",
       img: "https://design.canva.ai/8HPW-ZStB6sWTon",
-      link: "https://www.canva.com/d/4JpqCVRdjDOmn8Q"
+      link: "https://www.canva.com/d/4JpqCVRdjDOmn8Q",
+      roles: ["marketing", "coordinator"]
     },
     {
       emoji: "📣",
@@ -1509,7 +1632,8 @@ const DEFAULT_DATA = {
       title: "In-Clinic Event Announcement — Cheekbone Beauty",
       desc: "Designed a two-page event announcement combining promotional copy and brand-aligned visuals to drive attendance and awareness for a medical aesthetics in-clinic event.",
       img: "https://design.canva.ai/3i0XBBUO2FnGfKp",
-      link: "https://www.canva.com/d/v1ZIOqx-6srhQZF"
+      link: "https://www.canva.com/d/v1ZIOqx-6srhQZF",
+      roles: ["marketing"]
     },
     {
       emoji: "📑",
@@ -1517,7 +1641,8 @@ const DEFAULT_DATA = {
       title: "Landstar Brand Template Library (51 Pages)",
       desc: "Built an extensive 51-page template library for Landstar, covering all client-facing and internal operational documents — enabling consistent brand communication across a large team.",
       img: "https://design.canva.ai/RQ3vQpDwcIZak5j",
-      link: "https://www.canva.com/d/LwM059xIGC1gL2U"
+      link: "https://www.canva.com/d/LwM059xIGC1gL2U",
+      roles: ["coordinator", "va"]
     }
   ]
 };
@@ -1527,6 +1652,32 @@ const DEFAULT_DATA = {
 // ═══════════════════════════════════════════════
 const ADMIN_PASSWORD = "Nilsy@2025"; // ← Change this to your preferred password
 const STORAGE_KEY = "nilsy_portfolio_data";
+const DATA_VERSION = 3;
+
+function loadData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // If version mismatch, keep only user-edited text and reset structured data
+      if (parsed._version !== DATA_VERSION) {
+        const fresh = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        return {
+          ...fresh,
+          tagline:    parsed.tagline    || fresh.tagline,
+          aboutText:  parsed.aboutText  || fresh.aboutText,
+          contactSub: parsed.contactSub || fresh.contactSub,
+          roleBios:   parsed.roleBios   || fresh.roleBios,
+          _version: DATA_VERSION
+        };
+      }
+      return parsed;
+    }
+  } catch(e) {}
+  const fresh = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  fresh._version = DATA_VERSION;
+  return fresh;
+}
 
 let data = loadData();
 let currentRole = "all";
@@ -1534,14 +1685,6 @@ let adminUnlocked = false;
 let adminClickCount = 0;
 let adminClickTimer = null;
 let editingWorkIndex = null;
-
-function loadData() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return JSON.parse(saved);
-  } catch(e) {}
-  return JSON.parse(JSON.stringify(DEFAULT_DATA));
-}
 
 function saveData() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -1554,6 +1697,7 @@ function renderAll() {
   renderBio();
   renderExperience();
   renderSkills();
+  renderTools();
   renderWorks();
 }
 
@@ -1592,7 +1736,10 @@ function renderExperience() {
 
 function renderSkills() {
   const container = document.getElementById('skillsGrid');
-  container.innerHTML = data.skillCategories.map(cat => `
+  const filtered = currentRole === 'all'
+    ? data.skillCategories
+    : data.skillCategories.filter(c => c.roles.includes(currentRole) || c.roles.includes('all'));
+  container.innerHTML = filtered.map(cat => `
     <div class="skill-cat">
       <div class="skill-cat-label">${cat.label}</div>
       <div class="skill-pills">
@@ -1602,17 +1749,44 @@ function renderSkills() {
   `).join('');
 }
 
+function renderTools() {
+  const container = document.getElementById('toolsGrid');
+  if (!container) return;
+  const filtered = currentRole === 'all'
+    ? data.tools
+    : data.tools.filter(t => t.roles.includes(currentRole));
+  if (!filtered.length) {
+    container.innerHTML = '<p style="color:var(--grey-mid);font-size:13px;">No tools listed for this role yet.</p>';
+    return;
+  }
+  container.innerHTML = filtered.map(t => `
+    <div class="tool-chip">
+      <img src="https://www.google.com/s2/favicons?domain=${t.domain}&sz=32"
+           alt="${t.name}" class="tool-icon"
+           onerror="this.style.display='none'">
+      <span class="tool-name">${t.name}</span>
+    </div>
+  `).join('');
+}
+
 function renderWorks() {
   const container = document.getElementById('worksGrid');
-  container.innerHTML = data.works.map((w, i) => {
+  const filtered = currentRole === 'all'
+    ? data.works.map((w, i) => ({ w, i }))
+    : data.works.map((w, i) => ({ w, i })).filter(({ w }) => w.roles && w.roles.includes(currentRole));
+
+  if (!filtered.length) {
+    container.innerHTML = '<p style="color:var(--grey-mid);font-size:13px;grid-column:1/-1;">No work samples listed for this role yet.</p>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(({ w, i }) => {
     const thumb = w.img
       ? `<img src="${w.img}" alt="${w.title}" loading="lazy">`
       : `<span class="work-thumb-emoji">${w.emoji}</span>`;
-
     const viewBtn = w.link
       ? `<a href="${w.link}" target="_blank" class="work-view-btn" onclick="event.stopPropagation()">View ↗</a>`
       : '';
-
     return `
       <div class="work-card">
         <button class="work-edit-btn" onclick="openWorkEdit(${i})">Edit</button>
@@ -1630,18 +1804,25 @@ function renderWorks() {
 // ═══════════════════════════════════════════════
 //  ROLE FILTER
 // ═══════════════════════════════════════════════
-document.querySelectorAll('.role-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentRole = btn.dataset.role;
-    renderBio();
-    renderExperience();
-    // Animate the bio swap
-    const bio = document.getElementById('heroBio');
-    bio.style.opacity = '0';
-    setTimeout(() => { bio.style.opacity = '1'; }, 150);
+function setRole(role, updateUrl = true) {
+  currentRole = role;
+  document.querySelectorAll('.role-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.role === role);
   });
+  if (updateUrl) {
+    const url = new URL(window.location);
+    if (role === 'all') { url.searchParams.delete('role'); }
+    else { url.searchParams.set('role', role); }
+    window.history.replaceState({}, '', url);
+  }
+  const bio = document.getElementById('heroBio');
+  bio.style.opacity = '0';
+  setTimeout(() => { bio.style.opacity = '1'; }, 200);
+  renderAll();
+}
+
+document.querySelectorAll('.role-btn').forEach(btn => {
+  btn.addEventListener('click', () => setRole(btn.dataset.role));
 });
 
 // ═══════════════════════════════════════════════
@@ -1699,6 +1880,19 @@ function unlockAdmin() {
   // Make static text fields editable
   document.querySelectorAll('[data-editable]').forEach(el => {
     el.contentEditable = 'true';
+  });
+}
+
+function copyRoleLink() {
+  const url = new URL(window.location);
+  if (currentRole === 'all') { url.searchParams.delete('role'); }
+  else { url.searchParams.set('role', currentRole); }
+  navigator.clipboard.writeText(url.toString()).then(() => {
+    const btn = document.getElementById('copyLinkBtn');
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
   });
 }
 
@@ -1831,6 +2025,17 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 // ═══════════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════════
+const VALID_ROLES = ['all','property','coordinator','va','guest','healthcare','marketing'];
+
+// Read role from URL on load
+const urlRole = new URLSearchParams(window.location.search).get('role');
+if (urlRole && VALID_ROLES.includes(urlRole)) {
+  currentRole = urlRole;
+  document.querySelectorAll('.role-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.role === urlRole);
+  });
+}
+
 renderAll();
 
 // Apply saved text to static editable fields
@@ -1838,7 +2043,6 @@ document.querySelectorAll('[data-editable]').forEach(el => {
   const key = el.dataset.editable;
   if (key === 'tagline' && data.tagline) el.textContent = data.tagline;
   if (key === 'contactSub' && data.contactSub) el.textContent = data.contactSub;
-  // aboutText is multi-paragraph, keep as HTML structure
 });
 </script>
 </body>
