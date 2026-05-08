@@ -1,2049 +1,1270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nilsy Ynzon — Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nilsy Ynzon — Your Offshore COO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
   <style>
+    /* ─── CONFIG ───────────────────────────────────── */
     :root {
-      --cream: #FAF8F4;
-      --white: #FFFFFF;
-      --black: #111111;
-      --grey-dark: #3A3A3A;
-      --grey-mid: #7A7A7A;
-      --grey-light: #EDEBE6;
-      --grey-border: #DDD9D2;
-      --green: #8FA888;
-      --green-light: #C0D4BC;
-      --green-pale: #EEF4EC;
-      --font-display: 'Montserrat', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
-      --font-accent: 'Playfair Display', serif;
+      --bg:        #0A0A08;
+      --bg2:       #111110;
+      --bg3:       #1A1A17;
+      --gold:      #C9A84C;
+      --gold-lt:   #E0C57A;
+      --cream:     #F0EBE0;
+      --muted:     #8A8578;
+      --border:    rgba(201,168,76,0.18);
+      --card-bg:   rgba(255,255,255,0.03);
+      --radius:    4px;
+      --ff-head:   'Playfair Display', Georgia, serif;
+      --ff-body:   'DM Sans', sans-serif;
+      --ff-mono:   'DM Mono', monospace;
+      --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--cream);
-      color: var(--black);
-      font-family: var(--font-body);
-      font-size: 15px;
+      background: var(--bg);
+      color: var(--cream);
+      font-family: var(--ff-body);
+      font-weight: 300;
       line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* ── NAV ── */
+    /* ─── NOISE TEXTURE ────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 180px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── GLOBAL ───────────────────────────────────── */
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+    h1, h2, h3 { font-family: var(--ff-head); font-weight: 600; line-height: 1.15; }
+
+    a { color: inherit; text-decoration: none; }
+
+    .tag {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .tag::before { content: '— '; }
+
+    /* ─── SCROLL REVEAL ────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+    .reveal-d5 { transition-delay: 0.5s; }
+
+    /* ─── NAV ──────────────────────────────────────── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 200;
-      background: rgba(250,248,244,0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--grey-border);
-      padding: 0 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
+      z-index: 100;
+      padding: 20px 0;
+      transition: background 0.4s, padding 0.4s;
     }
-
+    nav.scrolled {
+      background: rgba(10,10,8,0.92);
+      backdrop-filter: blur(12px);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    nav .inner {
+      max-width: 1120px; margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
     .nav-logo {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 18px;
-      letter-spacing: 3px;
-      color: var(--black);
-      text-decoration: none;
+      font-family: var(--ff-head);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
-    }
-
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
     .nav-links a {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--grey-mid);
-      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
       transition: color 0.2s;
     }
-
-    .nav-links a:hover { color: var(--black); }
-
-    /* ── ROLE FILTER BAR ── */
-    .role-bar {
-      position: fixed;
-      top: 64px; left: 0; right: 0;
-      z-index: 199;
-      background: var(--white);
-      border-bottom: 1px solid var(--grey-border);
-      padding: 0 48px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      height: 50px;
-      overflow-x: auto;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    .role-bar::-webkit-scrollbar { display: none; }
-
-    .role-bar-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2px;
+    .nav-links a:hover { color: var(--cream); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--bg) !important;
+      padding: 10px 22px;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.08em !important;
       text-transform: uppercase;
-      color: var(--grey-mid);
-      white-space: nowrap;
-      margin-right: 4px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-lt) !important; color: var(--bg) !important; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
     }
 
-    .role-btn {
-      padding: 5px 16px;
-      border-radius: 100px;
-      border: 1px solid var(--grey-border);
-      background: transparent;
-      font-family: var(--font-body);
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--grey-mid);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s;
-      line-height: 1.5;
-    }
-
-    .role-btn:hover { border-color: var(--green); color: var(--black); }
-    .role-btn.active { background: var(--black); border-color: var(--black); color: var(--white); }
-
-    .role-bar-divider {
-      width: 1px;
-      height: 20px;
-      background: var(--grey-border);
-      margin: 0 4px;
-      flex-shrink: 0;
-    }
-
-    .copy-link-btn {
-      padding: 5px 14px;
-      border-radius: 100px;
-      border: 1px solid var(--green-light);
-      background: var(--green-pale);
-      font-family: var(--font-body);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--green);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
-
-    .copy-link-btn:hover { background: var(--green-light); color: var(--black); }
-    .copy-link-btn.copied { background: var(--green); color: var(--white); border-color: var(--green); }
-
-    /* ── LAYOUT ── */
-    main { padding-top: 114px; }
-
-    section {
-      padding: 88px 48px;
-      max-width: 1140px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 10px;
-    }
-
-    .section-rule {
-      width: 36px;
-      height: 2px;
-      background: var(--green);
-      margin-bottom: 40px;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 30px;
-      letter-spacing: -0.5px;
-      color: var(--black);
-      margin-bottom: 48px;
-    }
-
-    .section-divider {
-      border: none;
-      border-top: 1px solid var(--grey-border);
-      margin: 0 48px;
-      max-width: calc(1140px - 96px);
-    }
-
-    /* ── HERO ── */
+    /* ─── HERO ─────────────────────────────────────── */
     #hero {
-      padding-top: 96px;
-      padding-bottom: 96px;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 0 80px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .hero-inner {
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      top: 10%; right: -10%;
+      animation: glowPulse 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes glowPulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+
+    .hero-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1fr 380px;
       gap: 80px;
       align-items: center;
     }
 
-    .hero-name {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: clamp(56px, 8vw, 96px);
-      letter-spacing: -3px;
-      line-height: 0.92;
-      color: var(--black);
+    .hero-eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
       margin-bottom: 28px;
+      display: flex; align-items: center; gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease-out) 0.2s forwards;
     }
-
-    .hero-tagline {
-      font-family: var(--font-accent);
-      font-style: italic;
-      font-size: 17px;
-      color: var(--grey-mid);
-      margin-bottom: 28px;
-      line-height: 1.6;
-    }
-
-    .hero-bio {
-      font-size: 15px;
-      color: var(--grey-dark);
-      line-height: 1.85;
-      margin-bottom: 40px;
-      transition: opacity 0.35s;
-    }
-
-    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
-
-    .btn {
+    .hero-eyebrow::before {
+      content: '';
+      width: 40px; height: 1px;
+      background: var(--gold);
       display: inline-block;
-      padding: 12px 28px;
-      border-radius: 4px;
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s;
-      border: 1px solid transparent;
     }
 
-    .btn-primary { background: var(--black); color: var(--white); border-color: var(--black); }
-    .btn-primary:hover { background: var(--grey-dark); border-color: var(--grey-dark); }
-    .btn-secondary { background: transparent; color: var(--black); border-color: var(--grey-border); }
-    .btn-secondary:hover { border-color: var(--black); }
+    .hero-h1 {
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 28px;
+    }
 
-    .hero-stats {
+    .hero-h1 .line {
+      display: block;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .hero-h1 .line:nth-child(1) { animation: fadeUp 0.9s var(--ease-out) 0.3s forwards; }
+    .hero-h1 .line:nth-child(2) { animation: fadeUp 0.9s var(--ease-out) 0.45s forwards; color: var(--gold); font-style: italic; }
+    .hero-h1 .line:nth-child(3) { animation: fadeUp 0.9s var(--ease-out) 0.6s forwards; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: none; }
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease-out) 0.75s forwards;
+    }
+    .hero-sub strong { color: var(--cream); font-weight: 400; }
+
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease-out) 0.9s forwards;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg);
+      padding: 16px 36px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: inline-block;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .btn-primary:hover { background: var(--gold-lt); transform: translateY(-2px); }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--cream);
+      padding: 16px 36px;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: inline-block;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+
+    /* hero stats card */
+    .hero-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 40px 36px;
+      opacity: 0;
+      animation: fadeUp 1s var(--ease-out) 0.6s forwards;
+    }
+    .hero-card-label {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+    .stat-row {
+      display: flex; flex-direction: column;
+      gap: 24px;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: var(--ff-head);
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--cream);
+    }
+    .stat-num span { color: var(--gold); }
+    .stat-desc {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+    }
+    .stat-divider {
+      height: 1px;
+      background: var(--border);
+    }
+    .avail-badge {
+      display: flex; align-items: center; gap: 10px;
+      margin-top: 28px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .avail-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #4CAF50;
+      box-shadow: 0 0 8px rgba(76,175,80,0.6);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 8px rgba(76,175,80,0.6); }
+      50% { box-shadow: 0 0 16px rgba(76,175,80,0.9); }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-card { order: -1; }
+      .stat-row { flex-direction: row; flex-wrap: wrap; gap: 20px; }
+    }
+
+    /* ─── MARQUEE ──────────────────────────────────── */
+    .marquee-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+      overflow: hidden;
+      background: var(--bg2);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 28s linear infinite;
+      white-space: nowrap;
+      width: max-content;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 32px;
+      display: inline-flex; align-items: center; gap: 32px;
+    }
+    .marquee-item::after {
+      content: '✦';
+      color: var(--gold);
+      font-size: 8px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── SECTION SHARED ───────────────────────────── */
+    section { padding: 120px 0; position: relative; }
+
+    .section-header {
+      margin-bottom: 72px;
+    }
+    .section-header h2 {
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+    .section-header p {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 520px;
+      margin-top: 16px;
+      line-height: 1.8;
+    }
+
+    /* ─── SERVICES ─────────────────────────────────── */
+    #services { background: var(--bg2); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+
+    .service-card {
+      background: var(--bg);
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: background 0.3s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width 0.5s var(--ease-out);
+    }
+    .service-card:hover { background: var(--bg3); }
+    .service-card:hover::before { width: 100%; }
+
+    .service-icon {
+      font-size: 28px;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .service-num {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .service-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .service-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .service-card ul {
+      list-style: none;
+      margin-top: 16px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 6px;
     }
-
-    .stat-card {
-      background: var(--white);
-      border: 1px solid var(--grey-border);
-      border-radius: 10px;
-      padding: 24px 28px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .stat-num {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 36px;
-      line-height: 1;
-      color: var(--black);
-      white-space: nowrap;
-    }
-
-    .stat-num.green { color: var(--green); }
-
-    .stat-text .stat-title {
+    .service-card ul li {
       font-size: 13px;
-      font-weight: 600;
-      color: var(--black);
-      margin-bottom: 2px;
+      color: var(--muted);
+      padding-left: 16px;
+      position: relative;
+    }
+    .service-card ul li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--gold);
+      font-size: 11px;
     }
 
-    .stat-text .stat-sub {
-      font-size: 12px;
-      color: var(--grey-mid);
-    }
+    /* ─── HOW IT WORKS ─────────────────────────────── */
+    #how { background: var(--bg); }
 
-    /* ── ABOUT ── */
-    .about-grid {
+    .steps-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: start;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      position: relative;
+    }
+    .steps-grid::after {
+      content: '';
+      position: absolute;
+      top: 56px; left: 16.5%; right: 16.5%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      pointer-events: none;
     }
 
-    .about-text p { font-size: 15px; color: var(--grey-dark); line-height: 1.9; margin-bottom: 16px; }
-    .about-text p:last-child { margin-bottom: 0; }
+    @media (max-width: 700px) {
+      .steps-grid { grid-template-columns: 1fr; }
+      .steps-grid::after { display: none; }
+    }
 
-    .contact-stack { display: flex; flex-direction: column; gap: 20px; }
-
-    .contact-row { display: flex; align-items: flex-start; gap: 14px; }
-
-    .contact-dot {
-      width: 38px; height: 38px;
-      background: var(--green-pale);
-      border: 1px solid var(--green-light);
+    .step {
+      padding: 40px 36px;
+      text-align: center;
+    }
+    .step-circle {
+      width: 56px; height: 56px;
       border-radius: 50%;
+      border: 1px solid var(--gold);
       display: flex; align-items: center; justify-content: center;
-      font-size: 15px;
+      margin: 0 auto 28px;
+      font-family: var(--ff-head);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+      position: relative;
+      background: var(--bg);
+      z-index: 1;
+    }
+    .step h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .step p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ─── PRICING ──────────────────────────────────── */
+    #pricing { background: var(--bg2); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    @media (max-width: 800px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+    }
+
+    .plan {
+      background: var(--bg);
+      padding: 44px 36px;
+      position: relative;
+      transition: transform 0.3s var(--ease-out);
+    }
+    .plan:hover { transform: translateY(-6px); }
+
+    .plan.featured {
+      background: var(--bg3);
+      border: 1px solid var(--gold);
+    }
+    .plan-badge {
+      display: none;
+      position: absolute;
+      top: -1px; right: 24px;
+      background: var(--gold);
+      color: var(--bg);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+    }
+    .plan.featured .plan-badge { display: block; }
+
+    .plan-name {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .plan-price {
+      font-family: var(--ff-head);
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .plan-price sup { font-size: 24px; vertical-align: super; }
+    .plan-period {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .plan-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 28px;
+    }
+    .plan-features {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 12px;
+      margin-bottom: 36px;
+    }
+    .plan-features li {
+      font-size: 14px;
+      color: var(--muted);
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .plan-features li::before {
+      content: '✓';
+      color: var(--gold);
+      font-size: 13px;
       flex-shrink: 0;
       margin-top: 2px;
     }
+    .plan-features li.dim { opacity: 0.4; }
+    .plan-features li.dim::before { content: '–'; }
 
-    .contact-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--grey-mid);
-      margin-bottom: 2px;
-    }
-
-    .contact-value { font-size: 14px; color: var(--black); }
-    .contact-value a { color: var(--black); text-decoration: none; transition: color 0.2s; }
-    .contact-value a:hover { color: var(--green); }
-
-    /* ── EXPERIENCE ── */
-    .exp-list { display: flex; flex-direction: column; gap: 12px; }
-
-    .exp-card {
-      background: var(--white);
-      border: 1px solid var(--grey-border);
-      border-radius: 10px;
-      padding: 28px 32px;
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 32px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .exp-card:hover {
-      border-color: var(--green-light);
-      box-shadow: 0 4px 24px rgba(143,168,136,0.1);
-    }
-
-    .exp-card.hidden { display: none; }
-
-    .exp-meta-period {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--green);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .exp-meta-company {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--black);
-      margin-bottom: 10px;
-    }
-
-    .exp-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-
-    .exp-tag {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 100px;
-      background: var(--green-pale);
-      color: var(--green);
-      border: 1px solid var(--green-light);
-    }
-
-    .exp-title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--black);
-      margin-bottom: 14px;
-    }
-
-    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
-
-    .exp-bullets li {
-      font-size: 13.5px;
-      color: var(--grey-dark);
-      line-height: 1.6;
-      padding-left: 18px;
-      position: relative;
-    }
-
-    .exp-bullets li::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 8px;
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--green);
-    }
-
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .skill-cat {
-      background: var(--white);
-      border: 1px solid var(--grey-border);
-      border-radius: 10px;
-      padding: 24px;
-    }
-
-    .skill-cat-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 16px;
-    }
-
-    .skill-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-
-    .skill-pill {
+    .plan-cta {
+      display: block;
+      text-align: center;
+      padding: 14px;
       font-size: 12px;
       font-weight: 500;
-      padding: 5px 12px;
-      border-radius: 4px;
-      background: var(--cream);
-      border: 1px solid var(--grey-light);
-      color: var(--grey-dark);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      color: var(--cream);
+      transition: all 0.25s;
+    }
+    .plan-cta:hover, .plan.featured .plan-cta {
+      background: var(--gold);
+      color: var(--bg);
+      border-color: var(--gold);
+    }
+    .plan.featured .plan-cta:hover {
+      background: var(--gold-lt);
     }
 
-    /* ── EDUCATION ── */
-    .edu-degrees {
+    .pricing-note {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .pricing-note strong { color: var(--cream); font-weight: 400; }
+
+    /* ─── LEAD CAPTURE ─────────────────────────────── */
+    #contact { background: var(--bg); }
+
+    .contact-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-bottom: 40px;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 80px;
+      align-items: start;
     }
 
-    .edu-card {
-      background: var(--white);
-      border: 1px solid var(--grey-border);
-      border-radius: 10px;
-      padding: 24px;
+    @media (max-width: 800px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
     }
 
-    .edu-degree {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--black);
-      margin-bottom: 4px;
-      line-height: 1.4;
-    }
-
-    .edu-school { font-size: 12.5px; color: var(--grey-mid); margin-bottom: 6px; }
-
-    .edu-year {
-      font-size: 11px;
-      color: var(--green);
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    .edu-honor {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 100px;
-      background: var(--green-pale);
-      color: var(--green);
-      border: 1px solid var(--green-light);
-    }
-
-    .cert-subtitle {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--grey-mid);
+    .contact-left {}
+    .contact-left h2 {
+      font-size: clamp(32px, 4.5vw, 52px);
       margin-bottom: 20px;
     }
-
-    .cert-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+    .contact-left h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .contact-left p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 36px;
     }
 
-    .cert-card {
-      background: var(--cream);
-      border: 1px solid var(--grey-border);
-      border-radius: 8px;
-      padding: 18px 20px;
+    .trust-items {
+      display: flex; flex-direction: column; gap: 16px;
     }
-
-    .cert-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--black);
-      margin-bottom: 4px;
-      line-height: 1.4;
+    .trust-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      font-size: 14px;
+      color: var(--muted);
     }
-
-    .cert-issuer { font-size: 11px; color: var(--grey-mid); margin-bottom: 4px; }
-    .cert-date { font-size: 10px; color: var(--green); font-weight: 700; letter-spacing: 0.5px; }
-
-    .cert-highlight {
-      border-color: var(--green-light);
-      background: var(--green-pale);
-    }
-
-    /* ── TOOLS ── */
-    .tools-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .tool-chip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: var(--white);
-      border: 1px solid var(--grey-border);
-      border-radius: 100px;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-      cursor: default;
-    }
-
-    .tool-chip:hover {
-      border-color: var(--green);
-      box-shadow: 0 2px 12px rgba(143,168,136,0.15);
-      transform: translateY(-1px);
-    }
-
-    .tool-icon {
-      width: 16px;
-      height: 16px;
-      object-fit: contain;
+    .trust-icon {
+      width: 32px; height: 32px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
       flex-shrink: 0;
     }
 
-    .tool-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--grey-dark);
-      white-space: nowrap;
-    }
-
-    /* ── WORKS ── */
-    .works-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .work-card {
-      background: var(--white);
-      border: 1px solid var(--grey-border);
-      border-radius: 10px;
-      overflow: hidden;
-      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .work-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.08);
-      border-color: var(--green-light);
-    }
-
-    .work-thumb {
-      width: 100%;
-      height: 176px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      background: linear-gradient(135deg, var(--green-pale), var(--green-light));
-      position: relative;
-      overflow: hidden;
-    }
-
-    .work-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .work-thumb-emoji {
-      position: absolute;
-      font-size: 48px;
-      opacity: 0.6;
-    }
-
-    .work-body { padding: 20px 22px; }
-
-    .work-cat {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 6px;
-    }
-
-    .work-title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--black);
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-
-    .work-desc {
-      font-size: 12.5px;
-      color: var(--grey-mid);
-      line-height: 1.6;
-    }
-
-    .work-view-btn {
-      display: inline-block;
-      margin-top: 14px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: var(--green);
-      text-decoration: none;
-      border-bottom: 1px solid var(--green-light);
-      padding-bottom: 1px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .work-view-btn:hover { color: var(--black); border-color: var(--black); }
-
-    /* Admin edit button on work cards */
-    .work-edit-btn {
-      display: none;
-      position: absolute;
-      top: 10px; right: 10px;
-      background: var(--black);
-      color: var(--white);
-      border: none;
-      border-radius: 4px;
-      padding: 5px 10px;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-      z-index: 10;
-    }
-
-    body.admin-mode .work-edit-btn { display: block; }
-
-    /* ── CONTACT ── */
-    #contact { text-align: center; }
-
-    .contact-cta { max-width: 580px; margin: 0 auto; }
-
-    .contact-headline {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: clamp(40px, 5vw, 60px);
-      letter-spacing: -1.5px;
-      line-height: 1.0;
-      color: var(--black);
-      margin-bottom: 20px;
-    }
-
-    .contact-sub {
-      font-family: var(--font-accent);
-      font-style: italic;
-      font-size: 16px;
-      color: var(--grey-mid);
-      margin-bottom: 40px;
-      line-height: 1.7;
-    }
-
-    .contact-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--grey-border);
-      padding: 32px 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--grey-mid);
-      user-select: none;
-    }
-
-    .footer-links { display: flex; gap: 28px; }
-
-    .footer-links a {
-      font-size: 12px;
-      color: var(--grey-mid);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--black); }
-
-    /* ── ADMIN MODAL ── */
-    .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(17,17,17,0.55);
-      backdrop-filter: blur(4px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-overlay.open { display: flex; }
-
-    .modal-box {
-      background: var(--white);
-      border-radius: 14px;
-      padding: 44px 40px;
-      width: 380px;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.18);
-    }
-
-    .modal-title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 22px;
-      color: var(--black);
-      margin-bottom: 6px;
-    }
-
-    .modal-sub { font-size: 13px; color: var(--grey-mid); margin-bottom: 28px; }
-
-    .modal-input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid var(--grey-border);
-      border-radius: 6px;
-      font-family: var(--font-body);
-      font-size: 14px;
-      background: var(--cream);
-      color: var(--black);
-      margin-bottom: 10px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .modal-input:focus { border-color: var(--green); }
-
-    .modal-error {
-      font-size: 12px;
-      color: #C62828;
-      margin-bottom: 14px;
-      display: none;
-    }
-
-    .modal-error.show { display: block; }
-
-    .modal-btns { display: flex; gap: 12px; }
-
-    .modal-btn-cancel {
-      flex: 1;
-      padding: 11px;
-      border: 1px solid var(--grey-border);
-      background: transparent;
-      border-radius: 6px;
-      font-family: var(--font-body);
-      font-size: 13px;
-      color: var(--grey-mid);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .modal-btn-cancel:hover { border-color: var(--grey-dark); color: var(--black); }
-
-    .modal-btn-unlock {
-      flex: 2;
-      padding: 11px;
-      background: var(--black);
-      color: var(--white);
-      border: none;
-      border-radius: 6px;
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .modal-btn-unlock:hover { background: var(--grey-dark); }
-
-    /* Work Edit Modal */
-    .work-modal-box {
-      background: var(--white);
-      border-radius: 14px;
-      padding: 40px;
-      width: 520px;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.18);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .work-modal-title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 20px;
-      color: var(--black);
-      margin-bottom: 24px;
-    }
-
-    .form-group { margin-bottom: 18px; }
-
-    .form-label {
-      display: block;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--grey-mid);
-      margin-bottom: 8px;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1px solid var(--grey-border);
-      border-radius: 6px;
-      font-family: var(--font-body);
-      font-size: 13.5px;
-      background: var(--cream);
-      color: var(--black);
-      outline: none;
-      transition: border-color 0.2s;
-      resize: vertical;
-    }
-
-    .form-control:focus { border-color: var(--green); }
-
-    .work-modal-btns { display: flex; gap: 10px; margin-top: 8px; }
-
-    /* ── ADMIN BAR ── */
-    .admin-bar {
-      display: none;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: var(--black);
-      color: var(--white);
-      z-index: 300;
-      padding: 0 48px;
-      height: 52px;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .admin-bar.open { display: flex; }
-
-    .admin-bar-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--green-light);
-      margin-right: 8px;
-    }
-
-    .ab-btn {
-      padding: 6px 16px;
-      border-radius: 4px;
-      font-family: var(--font-body);
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: transparent;
-      color: var(--white);
-      transition: all 0.2s;
-    }
-
-    .ab-btn:hover { background: rgba(255,255,255,0.1); }
-
-    .ab-btn.save {
-      background: var(--green);
-      border-color: var(--green);
-    }
-
-    .ab-btn.save:hover { background: #7a9673; }
-
-    .ab-btn.danger { border-color: #C62828; color: #EF9A9A; }
-    .ab-btn.danger:hover { background: rgba(198,40,40,0.15); }
-
-    /* ── ADMIN EDITABLE ── */
-    body.admin-mode [data-editable] {
-      outline: 1.5px dashed var(--green);
-      border-radius: 3px;
-      cursor: text;
-      padding: 2px 4px;
-      margin: -2px -4px;
-      transition: outline 0.2s, background 0.2s;
-    }
-
-    body.admin-mode [data-editable]:hover,
-    body.admin-mode [data-editable]:focus {
-      outline: 2px solid var(--green);
-      background: var(--green-pale);
-    }
-
-    /* ── FADE IN ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-
-    .fade-up.visible { opacity: 1; transform: none; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      nav { padding: 0 24px; }
-      .role-bar { padding: 0 24px; }
-      section { padding: 64px 24px; }
-      .section-divider { margin: 0 24px; }
-      footer { padding: 28px 24px; }
-      .admin-bar { padding: 0 24px; }
-
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-      .hero-stats { flex-direction: row; overflow-x: auto; }
-      .stat-card { min-width: 180px; }
-
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-
-      .exp-card { grid-template-columns: 1fr; gap: 14px; }
-
-      .skills-grid { grid-template-columns: 1fr 1fr; }
-
-      .edu-degrees { grid-template-columns: 1fr 1fr; }
-      .cert-grid { grid-template-columns: 1fr 1fr; }
-
-      .works-grid { grid-template-columns: 1fr 1fr; }
-
-      .nav-links { display: none; }
+    /* form */
+    .lead-form {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 48px 44px;
     }
 
     @media (max-width: 600px) {
-      .skills-grid { grid-template-columns: 1fr; }
-      .edu-degrees { grid-template-columns: 1fr; }
-      .cert-grid { grid-template-columns: 1fr; }
-      .works-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 16px; text-align: center; }
+      .lead-form { padding: 32px 24px; }
+    }
+
+    .form-label {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .form-group { margin-bottom: 24px; }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--cream);
+      font-family: var(--ff-body);
+      font-size: 14px;
+      font-weight: 300;
+      padding: 14px 18px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.04);
+    }
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: rgba(138,133,120,0.5);
+    }
+    .form-select option { background: #1A1A17; color: var(--cream); }
+    .form-textarea { resize: vertical; min-height: 100px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    @media (max-width: 500px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      padding: 18px;
+      font-family: var(--ff-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      margin-top: 8px;
+    }
+    .form-submit:hover { background: var(--gold-lt); transform: translateY(-2px); }
+    .form-submit:active { transform: translateY(0); }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .form-status {
+      margin-top: 16px;
+      font-size: 13px;
+      text-align: center;
+      min-height: 20px;
+      color: var(--muted);
+    }
+    .form-status.success { color: #4CAF50; }
+    .form-status.error { color: #e74c3c; }
+
+    /* ─── FOOTER ───────────────────────────────────── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 48px 0;
+    }
+    .footer-inner {
+      max-width: 1120px; margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo {
+      font-family: var(--ff-head);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ─── TOAST ────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      background: var(--bg3);
+      border: 1px solid var(--gold);
+      color: var(--cream);
+      padding: 16px 24px;
+      font-size: 14px;
+      z-index: 999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.4s var(--ease-out);
+      max-width: 320px;
+    }
+    .toast.show { transform: none; opacity: 1; }
+    .toast-title {
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 0.05em;
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#hero" class="nav-logo">NY</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#tools">Tools</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#works">Works</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="inner">
+      <div class="nav-logo">N<span>.</span>Ynzon</div>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#how">Process</a>
+        <a href="#pricing">Rates</a>
+        <a href="#contact" class="nav-cta">Get Started</a>
+      </div>
+    </div>
+  </nav>
 
-<!-- ROLE FILTER -->
-<div class="role-bar" id="roleBar">
-  <span class="role-bar-label">View as →</span>
-  <button class="role-btn active" data-role="all">All Roles</button>
-  <button class="role-btn" data-role="property">Property Manager</button>
-  <button class="role-btn" data-role="coordinator">Project Coordinator</button>
-  <button class="role-btn" data-role="va">Executive VA</button>
-  <button class="role-btn" data-role="guest">Guest Experience</button>
-  <button class="role-btn" data-role="healthcare">Healthcare VA</button>
-  <button class="role-btn" data-role="marketing">Marketing Manager</button>
-  <div class="role-bar-divider"></div>
-  <button class="copy-link-btn" id="copyLinkBtn" onclick="copyRoleLink()">🔗 Copy Link</button>
-</div>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-eyebrow">Offshore Business Operations</div>
+          <h1 class="hero-h1">
+            <span class="line">Your Business.</span>
+            <span class="line">Running Itself.</span>
+            <span class="line">Finally.</span>
+          </h1>
+          <p class="hero-sub">
+            I'm Nilsy — your outsourced COO and marketing team in one.
+            <strong>US service businesses</strong> hire me when they're drowning in operations
+            and need someone who just handles it. No handholding. No micromanaging. Just results.
+          </p>
+          <div class="hero-btns">
+            <a href="#contact" class="btn-primary">Claim Your Spot</a>
+            <a href="#pricing" class="btn-ghost">See Rates</a>
+          </div>
+        </div>
 
-<main>
+        <div class="hero-card">
+          <div class="hero-card-label">Current Status</div>
+          <div class="stat-row">
+            <div class="stat-item">
+              <div class="stat-num">8<span>+</span></div>
+              <div class="stat-desc">Years of remote ops across 5+ industries</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-num">5</div>
+              <div class="stat-desc">Active US-based clients right now</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-num">C2</div>
+              <div class="stat-desc">English proficiency — EF SET 85/100</div>
+            </div>
+          </div>
+          <div class="avail-badge">
+            <span class="avail-dot"></span>
+            <span>1 retainer spot currently open</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-inner">
-    <div class="hero-left">
-      <h1 class="hero-name">NILSY<br>YNZON</h1>
-      <p class="hero-tagline" data-editable="tagline">Offshore Business Manager · Remote Operations Specialist</p>
-      <p class="hero-bio" id="heroBio">
-        Multidisciplinary remote professional with 8+ years of experience spanning property management, healthcare administration, digital marketing, executive support, project coordination, and guest operations. Based in Bacolod City, Philippines — available to clients globally across any timezone.
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Operations Management</span>
+      <span class="marquee-item">Social Media Strategy</span>
+      <span class="marquee-item">Customer Success</span>
+      <span class="marquee-item">SOP Building</span>
+      <span class="marquee-item">STR & Property Ops</span>
+      <span class="marquee-item">Marketing Execution</span>
+      <span class="marquee-item">Compliance Admin</span>
+      <span class="marquee-item">Guest Communications</span>
+      <span class="marquee-item">Operations Management</span>
+      <span class="marquee-item">Social Media Strategy</span>
+      <span class="marquee-item">Customer Success</span>
+      <span class="marquee-item">SOP Building</span>
+      <span class="marquee-item">STR & Property Ops</span>
+      <span class="marquee-item">Marketing Execution</span>
+      <span class="marquee-item">Compliance Admin</span>
+      <span class="marquee-item">Guest Communications</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <div class="section-header reveal">
+        <div class="tag">What I Do</div>
+        <h2>Six ways I take work<br/>off your plate.</h2>
+        <p>Each service is designed to run autonomously once we align. You set the direction. I handle execution.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card reveal reveal-d1">
+          <span class="service-num">01</span>
+          <span class="service-icon">⚙️</span>
+          <h3>Business Operations</h3>
+          <p>Systems, workflows, and execution management so nothing falls through the cracks.</p>
+          <ul>
+            <li>SOP creation and documentation</li>
+            <li>Weekly ops check-ins and reporting</li>
+            <li>Project coordination and follow-through</li>
+            <li>Inbox and calendar management</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal reveal-d2">
+          <span class="service-num">02</span>
+          <span class="service-icon">📣</span>
+          <h3>Social Media Management</h3>
+          <p>Full content execution — strategy, creation, scheduling, and performance tracking.</p>
+          <ul>
+            <li>Monthly content calendar</li>
+            <li>Static, carousel, and reel production</li>
+            <li>Caption writing and hashtag strategy</li>
+            <li>IG and Facebook management</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal reveal-d3">
+          <span class="service-num">03</span>
+          <span class="service-icon">🏡</span>
+          <h3>STR & Property Ops</h3>
+          <p>End-to-end short-term rental management — guest comms, pricing support, and compliance.</p>
+          <ul>
+            <li>Airbnb and VRBO guest messaging</li>
+            <li>Damage dispute handling</li>
+            <li>Dynamic pricing coordination</li>
+            <li>Listing optimization</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal reveal-d1">
+          <span class="service-num">04</span>
+          <span class="service-icon">🤝</span>
+          <h3>Customer Success</h3>
+          <p>Client onboarding, retention, and communication so your clients feel genuinely taken care of.</p>
+          <ul>
+            <li>Onboarding SOPs and workflows</li>
+            <li>Client communication management</li>
+            <li>Escalation handling</li>
+            <li>Account management support</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal reveal-d2">
+          <span class="service-num">05</span>
+          <span class="service-icon">📋</span>
+          <h3>Compliance Administration</h3>
+          <p>Regulatory filings, compliance docs, and agency correspondence handled with precision.</p>
+          <ul>
+            <li>License renewal coordination</li>
+            <li>Regulatory response letters</li>
+            <li>Document tracking and filing</li>
+            <li>Agency communication drafting</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal reveal-d3">
+          <span class="service-num">06</span>
+          <span class="service-icon">📊</span>
+          <h3>Marketing Strategy</h3>
+          <p>Data-backed content strategy and campaign execution that builds an audience that converts.</p>
+          <ul>
+            <li>Brand positioning and messaging</li>
+            <li>Lead gen campaigns</li>
+            <li>Email marketing copy</li>
+            <li>Competitor and market research</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="wrap">
+      <div class="section-header reveal" style="text-align:center; max-width:560px; margin-left:auto; margin-right:auto; margin-bottom:72px;">
+        <div class="tag">The Process</div>
+        <h2>From first call to fully running in 7 days.</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step reveal reveal-d1">
+          <div class="step-circle">1</div>
+          <h3>We Talk</h3>
+          <p>One 30-minute call. You tell me what's broken. I tell you exactly how I'd fix it and what it would cost.</p>
+        </div>
+        <div class="step reveal reveal-d2">
+          <div class="step-circle">2</div>
+          <h3>We Align</h3>
+          <p>I map your operations, document existing workflows, and build the systems your business needs to run without you babysitting it.</p>
+        </div>
+        <div class="step reveal reveal-d3">
+          <div class="step-circle">3</div>
+          <h3>I Handle It</h3>
+          <p>You get weekly reports, consistent execution, and a business that doesn't implode when you step away. That's the deal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-header reveal">
+        <div class="tag">Retainer Packages</div>
+        <h2>Transparent pricing.<br/>No surprises.</h2>
+        <p>All retainers are monthly. Cancel anytime with 30 days notice. Rates in USD — paid via Wise, PayPal, or Deel.</p>
+      </div>
+
+      <div class="pricing-grid">
+
+        <div class="plan reveal reveal-d1">
+          <div class="plan-badge">Most Popular</div>
+          <div class="plan-name">Starter Operator</div>
+          <div class="plan-price"><sup>$</sup>1,500</div>
+          <div class="plan-period">per month · up to 20 hrs/week</div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Operations management and reporting</li>
+            <li>SOP documentation (up to 5 SOPs)</li>
+            <li>Email and calendar management</li>
+            <li>Weekly ops check-in call</li>
+            <li>Friday status reports</li>
+            <li class="dim">Social media management</li>
+            <li class="dim">Marketing strategy</li>
+          </ul>
+          <a href="#contact" class="plan-cta">Get Started</a>
+        </div>
+
+        <div class="plan featured reveal reveal-d2">
+          <div class="plan-badge">Best Value</div>
+          <div class="plan-name">Full Operator</div>
+          <div class="plan-price"><sup>$</sup>2,000</div>
+          <div class="plan-period">per month · up to 30 hrs/week</div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Everything in Starter Operator</li>
+            <li>Social media management (1 platform)</li>
+            <li>Customer communications management</li>
+            <li>Client onboarding support</li>
+            <li>Compliance document drafting</li>
+            <li>Monthly marketing execution</li>
+            <li class="dim">Full marketing strategy</li>
+          </ul>
+          <a href="#contact" class="plan-cta">Get Started</a>
+        </div>
+
+        <div class="plan reveal reveal-d3">
+          <div class="plan-badge">Most Popular</div>
+          <div class="plan-name">Growth Partner</div>
+          <div class="plan-price"><sup>$</sup>2,500</div>
+          <div class="plan-period">per month · up to 40 hrs/week</div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Everything in Full Operator</li>
+            <li>Multi-platform social media</li>
+            <li>Full marketing strategy and execution</li>
+            <li>Lead gen campaign management</li>
+            <li>Bi-weekly strategy calls</li>
+            <li>STR or property ops included</li>
+            <li>Priority response (same business day)</li>
+          </ul>
+          <a href="#contact" class="plan-cta">Get Started</a>
+        </div>
+
+      </div>
+
+      <p class="pricing-note reveal">
+        Need something custom? <strong>Reach out below.</strong> Project-based engagements are available for one-time deliverables like SOP audits, launch campaigns, or compliance overhauls.
       </p>
-      <div class="hero-cta">
-        <a href="#contact" class="btn btn-primary">Let's Work Together</a>
-        <a href="https://ph.linkedin.com/in/nilsyynzon" target="_blank" class="btn btn-secondary">LinkedIn ↗</a>
+    </div>
+  </section>
+
+  <!-- LEAD CAPTURE -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+
+        <div class="contact-left reveal">
+          <div class="tag">Let's Talk</div>
+          <h2>Tell me what's <em>actually</em> on fire.</h2>
+          <p>
+            Fill out the form and I'll follow up within 24 hours with a proposed agenda for our discovery call.
+            No pitch decks. No fluff. Just a real conversation about what your business needs.
+          </p>
+          <div class="trust-items">
+            <div class="trust-item">
+              <div class="trust-icon">⚡</div>
+              <span>Response within 24 hours, usually faster</span>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">🔒</div>
+              <span>Your info goes directly into my private pipeline — no spam, ever</span>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">🌎</div>
+              <span>Available across any US timezone — EST to PST</span>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">🛡️</div>
+              <span>60-day guarantee — if it doesn't pay for itself, month 3 is free</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lead-form reveal reveal-d2">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input class="form-input" type="text" id="fname" placeholder="Jane" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input class="form-input" type="text" id="lname" placeholder="Smith" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Business Email</label>
+            <input class="form-input" type="email" id="email" placeholder="jane@yourbusiness.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Business Type</label>
+            <select class="form-select" id="biztype">
+              <option value="" disabled selected>Select your industry</option>
+              <option>Consulting / Coaching</option>
+              <option>Agency (Marketing, Creative, etc.)</option>
+              <option>Short-Term Rental / Property Management</option>
+              <option>Healthcare / Wellness</option>
+              <option>Legal / Financial Services</option>
+              <option>E-commerce</option>
+              <option>Real Estate</option>
+              <option>Other Service Business</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Package Interest</label>
+            <select class="form-select" id="package">
+              <option value="" disabled selected>Which retainer fits?</option>
+              <option>Starter Operator — $1,500/mo</option>
+              <option>Full Operator — $2,000/mo</option>
+              <option>Growth Partner — $2,500/mo</option>
+              <option>Not sure yet — let's talk</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Biggest Operational Headache Right Now</label>
+            <textarea class="form-textarea" id="problem" placeholder="Be specific. The more you tell me, the better I can prepare for our call..."></textarea>
+          </div>
+          <button class="form-submit" id="submitBtn" onclick="submitLead()">Send It Over →</button>
+          <div class="form-status" id="formStatus"></div>
+        </div>
+
       </div>
     </div>
-    <div class="hero-stats">
-      <div class="stat-card">
-        <div class="stat-num">8+</div>
-        <div class="stat-text">
-          <div class="stat-title">Years Remote Experience</div>
-          <div class="stat-sub">U.S.-based clients · Offshore</div>
-        </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">N<span>.</span>Ynzon</div>
+      <div class="footer-links">
+        <a href="https://ph.linkedin.com/in/nilsyynzon" target="_blank">LinkedIn</a>
+        <a href="mailto:workwithme.nilsy@gmail.com">Email</a>
+        <a href="https://nilsyynzon-source.github.io/" target="_blank">Portfolio</a>
       </div>
-      <div class="stat-card">
-        <div class="stat-num green">7</div>
-        <div class="stat-text">
-          <div class="stat-title">Distinct Professional Roles</div>
-          <div class="stat-sub">Operations · Admin · Healthcare · Marketing · PM</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">C2</div>
-        <div class="stat-text">
-          <div class="stat-title">English Proficiency</div>
-          <div class="stat-sub">EF SET Certificate · 85/100</div>
-        </div>
-      </div>
+      <div class="footer-copy">© 2026 Nilsy Ynzon. All rights reserved.</div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<hr class="section-divider">
-
-<!-- ABOUT -->
-<section id="about" class="fade-up">
-  <p class="section-label">About</p>
-  <div class="section-rule"></div>
-  <div class="about-grid">
-    <div class="about-text" data-editable="aboutText">
-      <p>I'm a versatile offshore professional who has worn many hats across operations, administration, property management, and guest relations — all in fully remote settings supporting U.S.-based clients.</p>
-      <p>What sets me apart is the combination of a legal and healthcare academic background with sharp operational instincts honed through years of real-world remote work. I bring structure to chaos, clarity to communication, and consistency to every role I step into.</p>
-      <p>Currently open to opportunities in offshore business management, operations coordination, and executive-level remote support.</p>
-    </div>
-    <div class="contact-stack">
-      <div class="contact-row">
-        <div class="contact-dot">📍</div>
-        <div>
-          <div class="contact-label">Location</div>
-          <div class="contact-value">Bacolod City, Western Visayas, Philippines</div>
-        </div>
-      </div>
-      <div class="contact-row">
-        <div class="contact-dot">✉️</div>
-        <div>
-          <div class="contact-label">Email</div>
-          <div class="contact-value"><a href="mailto:workwithme.nilsy@gmail.com">workwithme.nilsy@gmail.com</a></div>
-        </div>
-      </div>
-      <div class="contact-row">
-        <div class="contact-dot">📞</div>
-        <div>
-          <div class="contact-label">Phone / WhatsApp</div>
-          <div class="contact-value">+63 917-514-9593</div>
-        </div>
-      </div>
-      <div class="contact-row">
-        <div class="contact-dot">🕐</div>
-        <div>
-          <div class="contact-label">Availability</div>
-          <div class="contact-value">Available any timezone · Flexible scheduling</div>
-        </div>
-      </div>
-      <div class="contact-row">
-        <div class="contact-dot">🔗</div>
-        <div>
-          <div class="contact-label">LinkedIn</div>
-          <div class="contact-value"><a href="https://ph.linkedin.com/in/nilsyynzon" target="_blank">linkedin.com/in/nilsyynzon</a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<!-- EXPERIENCE -->
-<section id="experience" class="fade-up">
-  <p class="section-label">Experience</p>
-  <div class="section-rule"></div>
-  <h2 class="section-title">Professional History</h2>
-  <div class="exp-list" id="expList"></div>
-</section>
-
-<hr class="section-divider">
-
-<!-- SKILLS & TOOLS -->
-<section id="skills" class="fade-up">
-  <p class="section-label">Skills & Tools</p>
-  <div class="section-rule"></div>
-  <h2 class="section-title">What I Bring to the Table</h2>
-  <div class="skills-grid" id="skillsGrid"></div>
-</section>
-
-<hr class="section-divider">
-
-<!-- TOOLS -->
-<section id="tools" class="fade-up">
-  <p class="section-label">Tools & Platforms</p>
-  <div class="section-rule"></div>
-  <h2 class="section-title">What I Work With</h2>
-  <div class="tools-grid" id="toolsGrid"></div>
-</section>
-
-<hr class="section-divider">
-
-<!-- EDUCATION -->
-<section id="education" class="fade-up">
-  <p class="section-label">Education & Certifications</p>
-  <div class="section-rule"></div>
-  <h2 class="section-title">Academic & Professional Training</h2>
-
-  <div class="edu-degrees">
-    <div class="edu-card">
-      <div class="edu-degree">Bachelor of Science in Nursing</div>
-      <div class="edu-school">University of St. La Salle</div>
-      <div class="edu-year">2006 – 2010</div>
-      <span class="edu-honor">Cum Laude</span>
-    </div>
-    <div class="edu-card">
-      <div class="edu-degree">Masters in Nursing Administration</div>
-      <div class="edu-school">State University of Northern Negros</div>
-      <div class="edu-year">2010 – 2013</div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-degree">Juris Doctor</div>
-      <div class="edu-school">University of St. La Salle — College of Law</div>
-      <div class="edu-year">2013 – 2017</div>
-    </div>
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <div class="toast-title">✦ Lead received</div>
+    <div id="toast-msg">You're in my pipeline. Talk soon.</div>
   </div>
 
-  <div class="cert-subtitle">Certifications</div>
-  <div class="cert-grid">
-    <div class="cert-card cert-highlight">
-      <div class="cert-name">EF SET English Certificate</div>
-      <div class="cert-issuer">EF Education First</div>
-      <div class="cert-date">85/100 · C2 Proficient · Jan 2026</div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-name">Foundations of Digital Marketing & E-commerce</div>
-      <div class="cert-issuer">Coursera / Google</div>
-      <div class="cert-date">Sep 2023</div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-name">Attract & Engage Customers with Digital Marketing</div>
-      <div class="cert-issuer">Coursera / Google</div>
-      <div class="cert-date">Sep 2023</div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-name">Facebook Ads · Google My Business & Google Ads</div>
-      <div class="cert-issuer">Udemy</div>
-      <div class="cert-date">Aug 2023</div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-name">LinkedIn Marketing Solutions Fundamentals</div>
-      <div class="cert-issuer">LinkedIn</div>
-      <div class="cert-date">Apr 2023</div>
-    </div>
-  </div>
-</section>
+  <script>
+    // ─── CONFIG — REPLACE THESE ────────────────────
+    // Option A: Notion API via Make.com / Zapier webhook
+    // 1. Create a Make.com scenario: Webhook → Notion (Create Database Item)
+    // 2. Paste your webhook URL below
+    const WEBHOOK_URL = "YOUR_MAKE_OR_ZAPIER_WEBHOOK_URL_HERE";
 
-<hr class="section-divider">
+    // Option B: Formspree (fallback)
+    // const WEBHOOK_URL = "https://formspree.io/f/YOUR_FORM_ID";
+    // ───────────────────────────────────────────────
 
-<!-- SAMPLE WORKS -->
-<section id="works" class="fade-up">
-  <p class="section-label">Sample Works</p>
-  <div class="section-rule"></div>
-  <h2 class="section-title">Selected Projects</h2>
-  <div class="works-grid" id="worksGrid"></div>
-</section>
+    // NAV scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
 
-<hr class="section-divider">
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
 
-<!-- CONTACT -->
-<section id="contact" class="fade-up">
-  <div class="contact-cta">
-    <p class="section-label">Get in Touch</p>
-    <h2 class="contact-headline">Let's Work Together</h2>
-    <p class="contact-sub" data-editable="contactSub">Open to offshore business management, operations, healthcare admin, marketing, and executive-level remote roles. Based in the Philippines — available any timezone.</p>
-    <div class="contact-btns">
-      <a href="mailto:workwithme.nilsy@gmail.com" class="btn btn-primary">Send an Email</a>
-      <a href="https://ph.linkedin.com/in/nilsyynzon" target="_blank" class="btn btn-secondary">LinkedIn Profile ↗</a>
-    </div>
-  </div>
-</section>
+    // Form submit
+    async function submitLead() {
+      const btn = document.getElementById('submitBtn');
+      const status = document.getElementById('formStatus');
 
-</main>
+      const fname   = document.getElementById('fname').value.trim();
+      const lname   = document.getElementById('lname').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const biztype = document.getElementById('biztype').value;
+      const pkg     = document.getElementById('package').value;
+      const problem = document.getElementById('problem').value.trim();
 
-<footer>
-  <div class="footer-copy" id="adminTrigger" title="Click 5× to unlock admin">© 2025 Nilsy Ynzon. All rights reserved.</div>
-  <div class="footer-links">
-    <a href="mailto:workwithme.nilsy@gmail.com">Email</a>
-    <a href="https://ph.linkedin.com/in/nilsyynzon" target="_blank">LinkedIn</a>
-  </div>
-</footer>
-
-<!-- ADMIN MODAL -->
-<div class="modal-overlay" id="adminModal">
-  <div class="modal-box">
-    <div class="modal-title">Admin Access</div>
-    <div class="modal-sub">Enter your password to unlock edit mode.</div>
-    <input type="password" class="modal-input" id="adminPwInput" placeholder="Password" autocomplete="off" />
-    <div class="modal-error" id="adminError">Incorrect password. Try again.</div>
-    <div class="modal-btns">
-      <button class="modal-btn-cancel" onclick="closeAdminModal()">Cancel</button>
-      <button class="modal-btn-unlock" onclick="attemptLogin()">Unlock</button>
-    </div>
-  </div>
-</div>
-
-<!-- WORK EDIT MODAL -->
-<div class="modal-overlay" id="workModal">
-  <div class="work-modal-box">
-    <div class="work-modal-title">Edit Work Sample</div>
-    <div class="form-group">
-      <label class="form-label">Category</label>
-      <input type="text" class="form-control" id="wf-cat" placeholder="e.g. Property Management">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Title</label>
-      <input type="text" class="form-control" id="wf-title" placeholder="Project title">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Description</label>
-      <textarea class="form-control" id="wf-desc" rows="3" placeholder="Brief description of what you did and the outcome..."></textarea>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Emoji Icon</label>
-      <input type="text" class="form-control" id="wf-emoji" placeholder="e.g. 🏡" maxlength="4">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Image URL (optional)</label>
-      <input type="text" class="form-control" id="wf-img" placeholder="https://...">
-    </div>
-    <div class="form-group">
-      <label class="form-label">View Link (optional — e.g. Canva, Google Drive)</label>
-      <input type="text" class="form-control" id="wf-link" placeholder="https://...">
-    </div>
-    <div class="work-modal-btns">
-      <button class="modal-btn-cancel" style="flex:1" onclick="closeWorkModal()">Cancel</button>
-      <button class="modal-btn-unlock" style="flex:2" onclick="saveWork()">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- ADMIN BAR -->
-<div class="admin-bar" id="adminBar">
-  <span class="admin-bar-label">✦ Admin Mode</span>
-  <button class="ab-btn save" onclick="saveChanges()">Save Changes</button>
-  <button class="ab-btn" onclick="exportData()">Export JSON</button>
-  <button class="ab-btn" onclick="addWorkCard()">+ Add Work</button>
-  <button class="ab-btn danger" onclick="resetData()">Reset All</button>
-  <button class="ab-btn" onclick="lockAdmin()">Lock</button>
-</div>
-
-<script>
-// ═══════════════════════════════════════════════
-//  DATA
-// ═══════════════════════════════════════════════
-const DEFAULT_DATA = {
-  tagline: "Offshore Business Manager · Remote Operations Specialist",
-  aboutText: `I'm a versatile offshore professional who has worn many hats across operations, administration, property management, and guest relations — all in fully remote settings supporting U.S.-based clients.\n\nWhat sets me apart is the combination of a legal and healthcare academic background with sharp operational instincts honed through years of real-world remote work. I bring structure to chaos, clarity to communication, and consistency to every role I step into.\n\nCurrently open to opportunities in offshore business management, operations coordination, and executive-level remote support.`,
-  contactSub: "Open to offshore business management, operations, healthcare admin, marketing, and executive-level remote roles. Based in the Philippines — available any timezone.",
-
-  roleBios: {
-    all: "Multidisciplinary remote professional with 8+ years of experience spanning property management, healthcare administration, digital marketing, executive support, project coordination, and guest operations. Based in Bacolod City, Philippines — available to clients globally across any timezone.",
-    property: "Detail-oriented Property Manager and Short-Term Rental Operations Specialist with 2+ years supporting U.S.-based portfolios. Expert in work order management, vendor coordination, tenant communication, and maintaining accurate property records across cloud-based systems.",
-    coordinator: "Detail-oriented Project Coordinator and Assistant Property Manager with a proven track record of managing cross-functional workflows, dispatch schedules, and vendor relationships in fast-paced remote environments. Highly organized, proactive, and systems-driven.",
-    va: "Highly organized Executive Assistant with 4+ years supporting founders and leadership teams. Expert in complex calendar management, CRM upkeep, meeting coordination, internal documentation, and keeping operations running smoothly — all in fully remote settings.",
-    guest: "Guest Experience Representative with 2+ years of hands-on STR support across Airbnb and VRBO. Known for calm, empathetic, solution-oriented communication, proactive issue resolution, and maintaining high guest satisfaction scores in high-volume environments.",
-    healthcare: "Healthcare Virtual Assistant with 4+ years of experience supporting U.S.-based medical clinics in New York. Skilled in insurance verification, prior authorizations for PT and podiatry, patient scheduling, virtual reception, and HIPAA-compliant medical administrative support. Detail-oriented and experienced in fast-paced clinical environments.",
-    marketing: "Marketing Manager with 5+ years of experience driving lead generation, CRM management, email campaigns, and multi-channel digital marketing. Managed a CRM database of 35,000+ leads and contributed to $2.4M in revenue pipeline. Strong background in Meta Ads, LinkedIn, Google My Business, Canva, and WordPress — working end-to-end from strategy to execution."
-  },
-
-  experiences: [
-    {
-      period: "2022 – 2024",
-      company: "U.S.-Based Clinics (New York)",
-      title: "Virtual Medical Receptionist / Appointment Coordinator",
-      roles: ["healthcare"],
-      bullets: [
-        "Handled inbound patient calls and appointment scheduling for U.S.-based medical clinics",
-        "Coordinated provider calendars and clinic schedules to maximize efficiency",
-        "Managed patient inquiries, confirmations, and follow-ups with care and professionalism",
-        "Supported front-desk operations remotely with full HIPAA-compliant communication",
-        "Ensured accurate medical documentation and patient record management"
-      ]
-    },
-    {
-      period: "2020 – 2022",
-      company: "U.S.-Based Clinics (New York)",
-      title: "Medical Virtual Assistant",
-      roles: ["healthcare"],
-      bullets: [
-        "Conducted insurance verification and eligibility checks for patient appointments",
-        "Processed prior authorizations for physical therapy and podiatry clinics in New York",
-        "Followed up with insurance providers on approvals, denials, and resubmissions",
-        "Maintained accurate patient records and medical documentation in EHR systems",
-        "Coordinated with providers and insurance companies to ensure smooth claims workflow"
-      ]
-    },
-    {
-      period: "2023 – 2024",
-      company: "Watson Media House LLC",
-      title: "Marketing Operations & Executive Support",
-      roles: ["marketing", "coordinator", "va"],
-      bullets: [
-        "Managed CRM systems, tracked leads, follow-ups, and campaign performance metrics",
-        "Coordinated marketing calendars, campaign timelines, and meetings with senior leadership",
-        "Prepared marketing and performance reports to support decision-making and optimization",
-        "Ensured brand consistency across client communications, campaigns, and marketing materials"
-      ]
-    },
-    {
-      period: "2021 – 2023",
-      company: "StampStaff / Remote Staff",
-      title: "Digital Marketing Manager",
-      roles: ["marketing", "coordinator"],
-      bullets: [
-        "Managed a CRM database of 35,000+ leads, improving lead qualification by 25%",
-        "Planned and executed email and social media campaigns to drive booked meetings and conversions",
-        "Oversaw paid and organic campaigns across Facebook, Instagram, and LinkedIn",
-        "Tracked engagement, responses, and conversion performance to optimize campaigns"
-      ]
-    },
-    {
-      period: "2019 – 2022",
-      company: "BDM Media",
-      title: "Marketing & Lead Generation Executive",
-      roles: ["marketing", "coordinator"],
-      bullets: [
-        "Built and managed lead generation pipelines contributing to $2.4M in revenue",
-        "Coordinated outreach, follow-ups, and engagement strategies to increase conversions",
-        "Supported business development through data-driven marketing campaigns and reporting"
-      ]
-    },
-    {
-      period: "Contract",
-      company: "Jansson Logistics",
-      title: "Email Marketing & Funnel Marketing Specialist",
-      roles: ["marketing"],
-      bullets: [
-        "Planned and executed email marketing campaigns to support lead generation and client engagement",
-        "Designed and maintained the company website, focusing on conversion, clarity, and user experience",
-        "Built and optimized sales funnels including landing pages, email sequences, and follow-ups",
-        "Supported marketing initiatives that guided prospects from inquiry to conversion"
-      ]
-    },
-    {
-      period: "Contract",
-      company: "Search Party Recruiting",
-      title: "Email Marketing & Growth Marketing Specialist",
-      roles: ["marketing"],
-      bullets: [
-        "Led email marketing campaigns for lead nurturing, outbound outreach, and brand positioning",
-        "Designed and updated the company website to support recruiting and client acquisition efforts",
-        "Built and managed marketing funnels including lead magnets, landing pages, and automated email sequences",
-        "Aligned messaging with growth, hiring, and business development objectives"
-      ]
-    },
-    {
-      period: "Contract",
-      company: "Nicole Chan Photography",
-      title: "Email Marketing & Content Specialist",
-      roles: ["marketing"],
-      bullets: [
-        "Created and managed email marketing campaigns for promotions, client communication, and announcements",
-        "Wrote blog content to support SEO, storytelling, and brand authority",
-        "Maintained a consistent brand voice across email, blog, and all marketing materials"
-      ]
-    },
-    {
-      period: "2023 – 2025",
-      company: "Otium Rentals",
-      title: "Property Management – Short-Term Rental Operations VA",
-      roles: ["property", "guest", "coordinator"],
-      bullets: [
-        "Managed high-volume emails, work orders, and tenant communications for multiple properties",
-        "Coordinated vendor schedules for maintenance, cleaning, inspections, and turnovers",
-        "Managed daily guest communication across Airbnb and VRBO, handling inquiries, check-in instructions, and stay-related issues",
-        "Resolved guest concerns — access issues, maintenance problems, noise complaints, refunds — with calm and empathetic approach",
-        "Provided real-time support for urgent issues and last-minute schedule changes across any timezone",
-        "Maintained accurate property records, work order logs, vendor documentation, and operational trackers"
-      ]
-    },
-    {
-      period: "2022 – 2023",
-      company: "Watsons Media House",
-      title: "Customer Success Manager",
-      roles: ["va", "coordinator", "guest"],
-      bullets: [
-        "Managed client communications through email, calls, and follow-ups, ensuring timely responses and resolution",
-        "Coordinated internally with operations and external partners to maintain service quality",
-        "Tracked client requests, monitored open issues, and proactively addressed gaps before escalation",
-        "Prepared end-of-day and weekly reports summarizing client status and action items",
-        "Maintained organized documentation and CRM records for continuity"
-      ]
-    },
-    {
-      period: "2021 – 2022",
-      company: "Watsons Media House / Watson Social",
-      title: "Executive Virtual Assistant / Customer Relations Manager",
-      roles: ["va", "coordinator"],
-      bullets: [
-        "Provided direct administrative support to executives — calendar management, inbox handling, and task prioritization",
-        "Coordinated schedules, meetings, and confirmations to ensure all deadlines were met",
-        "Maintained project boards, internal documentation, and operational workflows",
-        "Served as a key point of contact for clients, managing follow-ups and issue resolution",
-        "Generated reports and summaries to support leadership decision-making"
-      ]
-    },
-    {
-      period: "2021 – 2022",
-      company: "StampStaff",
-      title: "Personal Assistant / Operations Support",
-      roles: ["va", "coordinator"],
-      bullets: [
-        "Supported executives with calendar management, inbox management, reminders, and task prioritization",
-        "Maintained CRM records, ensuring accurate data entry and reporting",
-        "Assisted with meeting preparation, follow-ups, and internal documentation",
-        "Coordinated with internal teams to ensure smooth information flow",
-        "Organized digital files and maintained structured workflows"
-      ]
-    },
-    {
-      period: "2019 – 2021",
-      company: "Remote Staff / StampStaff",
-      title: "Social Media Marketing Manager & Recruiter",
-      roles: ["coordinator", "va"],
-      bullets: [
-        "Managed CRM databases and communication workflows for leads, candidates, and clients",
-        "Handled high-volume follow-ups and confirmations, supporting recruitment and onboarding processes",
-        "Coordinated interview scheduling and candidate communications",
-        "Maintained accurate records and reporting to support hiring and operations teams"
-      ]
-    },
-    {
-      period: "2018 – 2019",
-      company: "InsightBIM",
-      title: "Executive Virtual Assistant",
-      roles: ["va", "coordinator"],
-      bullets: [
-        "Managed executive calendars, meetings, and internal appointments",
-        "Prepared agendas, tracked follow-ups, and ensured task completion",
-        "Maintained CRM records and ensured data accuracy",
-        "Organized digital files and supported cross-department coordination",
-        "Supported outreach and relationship management through structured follow-ups"
-      ]
-    },
-    {
-      period: "2017 – 2018",
-      company: "BDM Media",
-      title: "Lead Generation Executive",
-      roles: ["coordinator", "va"],
-      bullets: [
-        "Managed outreach lists, follow-ups, and CRM updates",
-        "Ensured accurate documentation and status tracking for leads",
-        "Supported revenue teams through consistent communication and reporting"
-      ]
-    }
-  ],
-
-  skillCategories: [
-    {
-      label: "Operations & Administration",
-      roles: ["all", "property", "coordinator", "va", "guest", "healthcare"],
-      pills: ["Inbox & Calendar Management", "Task Prioritization", "Documentation", "Digital File Organization", "Process Improvement", "SOP Creation", "Reporting & Analytics"]
-    },
-    {
-      label: "Property & STR Management",
-      roles: ["property", "guest"],
-      pills: ["Work Order Management", "Vendor Coordination", "Tenant Communication", "Turnover Scheduling", "Inspection Coordination", "Airbnb / VRBO Support", "Maintenance Tracking"]
-    },
-    {
-      label: "CRM & Communication",
-      roles: ["all", "va", "coordinator", "guest", "marketing", "healthcare"],
-      pills: ["CRM Data Entry & Upkeep", "Client Follow-ups", "Issue Escalation", "Complaint Resolution", "Email Campaigns", "Onboarding Support", "Relationship Management"]
-    },
-    {
-      label: "Project Coordination",
-      roles: ["coordinator", "va", "property", "healthcare"],
-      pills: ["Workflow Management", "Cross-functional Coordination", "Vendor Management", "Timeline Tracking", "Meeting Facilitation", "Action Item Follow-up", "Status Reporting"]
-    },
-    {
-      label: "Healthcare Administration",
-      roles: ["healthcare"],
-      pills: ["Insurance Verification", "Prior Authorizations (PT & Podiatry)", "Virtual Receptionist", "Appointment Scheduling", "Patient Communication", "EHR Systems", "HIPAA Compliance", "Medical Records Management", "Provider Coordination"]
-    },
-    {
-      label: "Digital Marketing",
-      roles: ["marketing"],
-      pills: ["Meta Ads (FB & IG)", "LinkedIn Marketing", "Google My Business", "Email Campaigns", "Sales Funnels", "SEO Content Writing", "Campaign Tracking", "WordPress", "Lead Generation", "CRM Database Management"]
-    },
-    {
-      label: "Content & Brand",
-      roles: ["marketing", "coordinator"],
-      pills: ["Social Media Management", "Content Strategy", "Copywriting", "Brand Consistency", "Canva Design", "Campaign Planning", "Audience Engagement"]
-    },
-    {
-      label: "Core Competencies",
-      roles: ["all", "property", "coordinator", "va", "guest", "healthcare", "marketing"],
-      pills: ["Remote Work Excellence", "High Attention to Detail", "Any Timezone Availability", "Multi-tasking", "Recruiting", "Business Development", "Team Coordination", "C2 English (85/100)"]
-    }
-  ],
-
-  tools: [
-    { name: "Google Workspace", domain: "workspace.google.com", roles: ["all", "property", "coordinator", "va", "guest", "healthcare", "marketing"] },
-    { name: "Gmail", domain: "gmail.com", roles: ["all", "property", "coordinator", "va", "guest", "healthcare", "marketing"] },
-    { name: "Google Drive", domain: "drive.google.com", roles: ["all", "property", "coordinator", "va", "guest", "healthcare", "marketing"] },
-    { name: "Google Sheets", domain: "sheets.google.com", roles: ["all", "property", "coordinator", "va", "healthcare", "marketing"] },
-    { name: "Google Meet", domain: "meet.google.com", roles: ["all", "property", "coordinator", "va", "healthcare", "marketing"] },
-    { name: "Slack", domain: "slack.com", roles: ["all", "property", "coordinator", "va", "guest", "marketing"] },
-    { name: "Zoom", domain: "zoom.us", roles: ["all", "va", "coordinator", "healthcare", "marketing"] },
-    { name: "Canva", domain: "canva.com", roles: ["all", "marketing", "coordinator", "va"] },
-    { name: "Notion", domain: "notion.so", roles: ["coordinator", "va", "property"] },
-    { name: "Asana", domain: "asana.com", roles: ["coordinator", "va", "property"] },
-    { name: "ClickUp", domain: "clickup.com", roles: ["coordinator", "va"] },
-    { name: "Trello", domain: "trello.com", roles: ["coordinator", "va"] },
-    { name: "Monday.com", domain: "monday.com", roles: ["coordinator", "va"] },
-    { name: "Airtable", domain: "airtable.com", roles: ["coordinator", "va", "property"] },
-    { name: "HubSpot", domain: "hubspot.com", roles: ["marketing", "va", "coordinator"] },
-    { name: "Microsoft Office", domain: "microsoft.com", roles: ["all", "va", "coordinator", "healthcare"] },
-    { name: "Loom", domain: "loom.com", roles: ["coordinator", "va", "marketing"] },
-    { name: "Airbnb", domain: "airbnb.com", roles: ["property", "guest"] },
-    { name: "VRBO", domain: "vrbo.com", roles: ["property", "guest"] },
-    { name: "WhatsApp Business", domain: "whatsapp.com", roles: ["all", "property", "guest", "va"] },
-    { name: "Meta Ads Manager", domain: "facebook.com", roles: ["marketing"] },
-    { name: "LinkedIn", domain: "linkedin.com", roles: ["marketing", "coordinator"] },
-    { name: "Google Ads", domain: "ads.google.com", roles: ["marketing"] },
-    { name: "Google My Business", domain: "business.google.com", roles: ["marketing"] },
-    { name: "WordPress", domain: "wordpress.com", roles: ["marketing"] },
-    { name: "Mailchimp", domain: "mailchimp.com", roles: ["marketing"] },
-    { name: "Dropbox", domain: "dropbox.com", roles: ["va", "coordinator", "property"] }
-  ],
-
-  works: [
-    {
-      emoji: "✨",
-      category: "Social Media Management",
-      title: "Instagram Content Suite — Suspending Time Medical Aesthetics",
-      desc: "Produced a series of polished Instagram posts for a medical aesthetics brand — promotional graphics, educational content, and quote cards designed to build brand trust and drive consultation bookings.",
-      img: "https://design.canva.ai/8tUD8djNKy2nogG",
-      link: "https://www.canva.com/d/G0U2dIymJUkO0rX",
-      roles: ["marketing", "coordinator"]
-    },
-    {
-      emoji: "📋",
-      category: "Operations Documentation",
-      title: "Client Bookings SOP Handbook — Suspending Time (16 pages)",
-      desc: "Designed and structured a comprehensive Standard Operating Procedures handbook covering client booking flows, appointment protocols, and team workflows for a medical aesthetics clinic.",
-      img: "https://design.canva.ai/_MESxlByXp62xHo",
-      link: "https://www.canva.com/d/3N9f8YInhkB8uhe",
-      roles: ["coordinator", "va", "property", "healthcare"]
-    },
-    {
-      emoji: "📖",
-      category: "Content Marketing",
-      title: "Educational Instagram Carousel — 5 Things to Know Before Fillers",
-      desc: "Created a 6-slide educational carousel for a medical aesthetics client to establish authority, educate potential patients, and drive engagement through clean, informative visuals.",
-      img: "https://design.canva.ai/qqe5GefLzS_kUcl",
-      link: "https://www.canva.com/d/OMtyFfP3ns1dhKJ",
-      roles: ["marketing"]
-    },
-    {
-      emoji: "🔄",
-      category: "Process Documentation",
-      title: "Lead Follow-Up Workflow Infographic — Suspending Time",
-      desc: "Built a visual workflow infographic mapping the full client journey from first inquiry to confirmed booking — used as an internal operations reference for the sales and admin team.",
-      img: "https://design.canva.ai/16oDm1bPfd4EcFj",
-      link: "https://www.canva.com/d/YSs040pyxKevoHb",
-      roles: ["marketing", "coordinator"]
-    },
-    {
-      emoji: "🗂️",
-      category: "Project Coordination",
-      title: "Full Template System — SRP Client (37 Pages)",
-      desc: "Developed a 37-page branded template system for a client, including document templates, reporting formats, and communication frameworks built for consistent team use at scale.",
-      img: "https://design.canva.ai/dJcmjSKB3F-qmvw",
-      link: "https://www.canva.com/d/3gMhXQrqfGc-7IQ",
-      roles: ["coordinator", "va"]
-    },
-    {
-      emoji: "🏢",
-      category: "Operations Management",
-      title: "Full Template System — Jansson LLC (42 Pages)",
-      desc: "Produced an extensive 42-page operations template system for Jansson LLC covering internal documents, client-facing materials, and workflow trackers across multiple departments.",
-      img: "https://design.canva.ai/S9Ma92zr1PmQ76x",
-      link: "https://www.canva.com/d/4QRmDpen7UsI_nS",
-      roles: ["coordinator", "va", "marketing"]
-    },
-    {
-      emoji: "🌐",
-      category: "Digital Strategy",
-      title: "Website Design Mockup — Jansson LLC",
-      desc: "Designed a multi-page website layout mockup for Jansson LLC including homepage, services pages, and industry-specific sections — used as a visual brief for development handoff.",
-      img: "https://design.canva.ai/8HPW-ZStB6sWTon",
-      link: "https://www.canva.com/d/4JpqCVRdjDOmn8Q",
-      roles: ["marketing", "coordinator"]
-    },
-    {
-      emoji: "📣",
-      category: "Event Marketing",
-      title: "In-Clinic Event Announcement — Cheekbone Beauty",
-      desc: "Designed a two-page event announcement combining promotional copy and brand-aligned visuals to drive attendance and awareness for a medical aesthetics in-clinic event.",
-      img: "https://design.canva.ai/3i0XBBUO2FnGfKp",
-      link: "https://www.canva.com/d/v1ZIOqx-6srhQZF",
-      roles: ["marketing"]
-    },
-    {
-      emoji: "📑",
-      category: "Operations Documentation",
-      title: "Landstar Brand Template Library (51 Pages)",
-      desc: "Built an extensive 51-page template library for Landstar, covering all client-facing and internal operational documents — enabling consistent brand communication across a large team.",
-      img: "https://design.canva.ai/RQ3vQpDwcIZak5j",
-      link: "https://www.canva.com/d/LwM059xIGC1gL2U",
-      roles: ["coordinator", "va"]
-    }
-  ]
-};
-
-// ═══════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════
-const ADMIN_PASSWORD = "Nilsy@2025"; // ← Change this to your preferred password
-const STORAGE_KEY = "nilsy_portfolio_data";
-const DATA_VERSION = 3;
-
-function loadData() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // If version mismatch, keep only user-edited text and reset structured data
-      if (parsed._version !== DATA_VERSION) {
-        const fresh = JSON.parse(JSON.stringify(DEFAULT_DATA));
-        return {
-          ...fresh,
-          tagline:    parsed.tagline    || fresh.tagline,
-          aboutText:  parsed.aboutText  || fresh.aboutText,
-          contactSub: parsed.contactSub || fresh.contactSub,
-          roleBios:   parsed.roleBios   || fresh.roleBios,
-          _version: DATA_VERSION
-        };
+      if (!fname || !email || !biztype || !problem) {
+        status.textContent = 'Please fill in all required fields.';
+        status.className = 'form-status error';
+        return;
       }
-      return parsed;
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      status.textContent = '';
+
+      const payload = {
+        name: `${fname} ${lname}`,
+        email,
+        business_type: biztype,
+        package_interest: pkg,
+        biggest_problem: problem,
+        submitted_at: new Date().toISOString(),
+        source: 'Landing Page'
+      };
+
+      // If no webhook configured, simulate success for demo
+      if (WEBHOOK_URL === "YOUR_MAKE_OR_ZAPIER_WEBHOOK_URL_HERE") {
+        await new Promise(r => setTimeout(r, 1200));
+        showSuccess(fname);
+        return;
+      }
+
+      try {
+        await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          mode: 'no-cors'
+        });
+        showSuccess(fname);
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Send It Over →';
+        status.textContent = 'Something went wrong. Email me directly at workwithme.nilsy@gmail.com';
+        status.className = 'form-status error';
+      }
     }
-  } catch(e) {}
-  const fresh = JSON.parse(JSON.stringify(DEFAULT_DATA));
-  fresh._version = DATA_VERSION;
-  return fresh;
-}
 
-let data = loadData();
-let currentRole = "all";
-let adminUnlocked = false;
-let adminClickCount = 0;
-let adminClickTimer = null;
-let editingWorkIndex = null;
+    function showSuccess(name) {
+      document.getElementById('formStatus').textContent = '';
+      // clear form
+      ['fname','lname','email','problem'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('biztype').selectedIndex = 0;
+      document.getElementById('package').selectedIndex = 0;
 
-function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = false;
+      btn.textContent = 'Send It Over →';
 
-// ═══════════════════════════════════════════════
-//  RENDER
-// ═══════════════════════════════════════════════
-function renderAll() {
-  renderBio();
-  renderExperience();
-  renderSkills();
-  renderTools();
-  renderWorks();
-}
-
-function renderBio() {
-  document.getElementById('heroBio').textContent = data.roleBios[currentRole] || data.roleBios.all;
-}
-
-function renderExperience() {
-  const container = document.getElementById('expList');
-  const roleTagLabels = {
-    property: "Property Manager",
-    coordinator: "Project Coordinator",
-    va: "Executive VA",
-    guest: "Guest Experience"
-  };
-
-  container.innerHTML = data.experiences.map((exp, i) => {
-    const isHidden = currentRole !== "all" && !exp.roles.includes(currentRole);
-    const tags = exp.roles.map(r => `<span class="exp-tag">${roleTagLabels[r] || r}</span>`).join('');
-    const bullets = exp.bullets.map(b => `<li>${b}</li>`).join('');
-
-    return `
-      <div class="exp-card ${isHidden ? 'hidden' : ''}" data-exp="${i}">
-        <div class="exp-meta">
-          <div class="exp-meta-period">${exp.period}</div>
-          <div class="exp-meta-company">${exp.company}</div>
-          <div class="exp-tags">${tags}</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-title">${exp.title}</div>
-          <ul class="exp-bullets">${bullets}</ul>
-        </div>
-      </div>`;
-  }).join('');
-}
-
-function renderSkills() {
-  const container = document.getElementById('skillsGrid');
-  const filtered = currentRole === 'all'
-    ? data.skillCategories
-    : data.skillCategories.filter(c => c.roles.includes(currentRole) || c.roles.includes('all'));
-  container.innerHTML = filtered.map(cat => `
-    <div class="skill-cat">
-      <div class="skill-cat-label">${cat.label}</div>
-      <div class="skill-pills">
-        ${cat.pills.map(p => `<span class="skill-pill">${p}</span>`).join('')}
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderTools() {
-  const container = document.getElementById('toolsGrid');
-  if (!container) return;
-  const filtered = currentRole === 'all'
-    ? data.tools
-    : data.tools.filter(t => t.roles.includes(currentRole));
-  if (!filtered.length) {
-    container.innerHTML = '<p style="color:var(--grey-mid);font-size:13px;">No tools listed for this role yet.</p>';
-    return;
-  }
-  container.innerHTML = filtered.map(t => `
-    <div class="tool-chip">
-      <img src="https://www.google.com/s2/favicons?domain=${t.domain}&sz=32"
-           alt="${t.name}" class="tool-icon"
-           onerror="this.style.display='none'">
-      <span class="tool-name">${t.name}</span>
-    </div>
-  `).join('');
-}
-
-function renderWorks() {
-  const container = document.getElementById('worksGrid');
-  const filtered = currentRole === 'all'
-    ? data.works.map((w, i) => ({ w, i }))
-    : data.works.map((w, i) => ({ w, i })).filter(({ w }) => w.roles && w.roles.includes(currentRole));
-
-  if (!filtered.length) {
-    container.innerHTML = '<p style="color:var(--grey-mid);font-size:13px;grid-column:1/-1;">No work samples listed for this role yet.</p>';
-    return;
-  }
-
-  container.innerHTML = filtered.map(({ w, i }) => {
-    const thumb = w.img
-      ? `<img src="${w.img}" alt="${w.title}" loading="lazy">`
-      : `<span class="work-thumb-emoji">${w.emoji}</span>`;
-    const viewBtn = w.link
-      ? `<a href="${w.link}" target="_blank" class="work-view-btn" onclick="event.stopPropagation()">View ↗</a>`
-      : '';
-    return `
-      <div class="work-card">
-        <button class="work-edit-btn" onclick="openWorkEdit(${i})">Edit</button>
-        <div class="work-thumb">${thumb}</div>
-        <div class="work-body">
-          <div class="work-cat">${w.category}</div>
-          <div class="work-title">${w.title}</div>
-          <div class="work-desc">${w.desc}</div>
-          ${viewBtn}
-        </div>
-      </div>`;
-  }).join('');
-}
-
-// ═══════════════════════════════════════════════
-//  ROLE FILTER
-// ═══════════════════════════════════════════════
-function setRole(role, updateUrl = true) {
-  currentRole = role;
-  document.querySelectorAll('.role-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.role === role);
-  });
-  if (updateUrl) {
-    const url = new URL(window.location);
-    if (role === 'all') { url.searchParams.delete('role'); }
-    else { url.searchParams.set('role', role); }
-    window.history.replaceState({}, '', url);
-  }
-  const bio = document.getElementById('heroBio');
-  bio.style.opacity = '0';
-  setTimeout(() => { bio.style.opacity = '1'; }, 200);
-  renderAll();
-}
-
-document.querySelectorAll('.role-btn').forEach(btn => {
-  btn.addEventListener('click', () => setRole(btn.dataset.role));
-});
-
-// ═══════════════════════════════════════════════
-//  ADMIN AUTH
-// ═══════════════════════════════════════════════
-const adminTrigger = document.getElementById('adminTrigger');
-adminTrigger.addEventListener('click', () => {
-  adminClickCount++;
-  clearTimeout(adminClickTimer);
-  adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 1500);
-  if (adminClickCount >= 5) {
-    adminClickCount = 0;
-    openAdminModal();
-  }
-});
-
-function openAdminModal() {
-  document.getElementById('adminModal').classList.add('open');
-  document.getElementById('adminPwInput').value = '';
-  document.getElementById('adminError').classList.remove('show');
-  setTimeout(() => document.getElementById('adminPwInput').focus(), 100);
-}
-
-function closeAdminModal() {
-  document.getElementById('adminModal').classList.remove('open');
-}
-
-function attemptLogin() {
-  const pw = document.getElementById('adminPwInput').value;
-  if (pw === ADMIN_PASSWORD) {
-    closeAdminModal();
-    unlockAdmin();
-  } else {
-    document.getElementById('adminError').classList.add('show');
-    document.getElementById('adminPwInput').value = '';
-    document.getElementById('adminPwInput').focus();
-  }
-}
-
-document.getElementById('adminPwInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') attemptLogin();
-  if (e.key === 'Escape') closeAdminModal();
-});
-
-// Close modal on overlay click
-document.getElementById('adminModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('adminModal')) closeAdminModal();
-});
-
-function unlockAdmin() {
-  adminUnlocked = true;
-  document.body.classList.add('admin-mode');
-  document.getElementById('adminBar').classList.add('open');
-
-  // Make static text fields editable
-  document.querySelectorAll('[data-editable]').forEach(el => {
-    el.contentEditable = 'true';
-  });
-}
-
-function copyRoleLink() {
-  const url = new URL(window.location);
-  if (currentRole === 'all') { url.searchParams.delete('role'); }
-  else { url.searchParams.set('role', currentRole); }
-  navigator.clipboard.writeText(url.toString()).then(() => {
-    const btn = document.getElementById('copyLinkBtn');
-    const orig = btn.textContent;
-    btn.textContent = '✓ Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
-  });
-}
-
-function lockAdmin() {
-  adminUnlocked = false;
-  document.body.classList.remove('admin-mode');
-  document.getElementById('adminBar').classList.remove('open');
-
-  document.querySelectorAll('[data-editable]').forEach(el => {
-    el.contentEditable = 'false';
-  });
-}
-
-// ═══════════════════════════════════════════════
-//  ADMIN SAVE / EXPORT / RESET
-// ═══════════════════════════════════════════════
-function saveChanges() {
-  // Harvest editable text fields
-  document.querySelectorAll('[data-editable]').forEach(el => {
-    const key = el.dataset.editable;
-    if (key === 'aboutText') {
-      data.aboutText = el.innerText;
-    } else if (key === 'tagline') {
-      data.tagline = el.innerText;
-    } else if (key === 'contactSub') {
-      data.contactSub = el.innerText;
+      // toast
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent =
+        `Got it, ${name || 'friend'}. I'll be in your inbox within 24 hours.`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 5000);
     }
-  });
-
-  saveData();
-
-  // Flash save button
-  const btn = document.querySelector('.ab-btn.save');
-  const orig = btn.textContent;
-  btn.textContent = '✓ Saved!';
-  setTimeout(() => { btn.textContent = orig; }, 1500);
-}
-
-function exportData() {
-  saveChanges();
-  const json = JSON.stringify(data, null, 2);
-  const blob = new Blob([json], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'nilsy-portfolio-data.json';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function resetData() {
-  if (!confirm('Reset all content to defaults? This cannot be undone.')) return;
-  localStorage.removeItem(STORAGE_KEY);
-  data = JSON.parse(JSON.stringify(DEFAULT_DATA));
-  renderAll();
-  // Restore static editable fields
-  document.querySelectorAll('[data-editable]').forEach(el => {
-    const key = el.dataset.editable;
-    if (key === 'tagline') el.textContent = data.tagline;
-    if (key === 'aboutText') el.textContent = data.aboutText;
-    if (key === 'contactSub') el.textContent = data.contactSub;
-  });
-}
-
-// ═══════════════════════════════════════════════
-//  WORK CARD EDITING
-// ═══════════════════════════════════════════════
-function openWorkEdit(index) {
-  editingWorkIndex = index;
-  const w = data.works[index];
-  document.getElementById('wf-cat').value = w.category;
-  document.getElementById('wf-title').value = w.title;
-  document.getElementById('wf-desc').value = w.desc;
-  document.getElementById('wf-emoji').value = w.emoji;
-  document.getElementById('wf-img').value = w.img || '';
-  document.getElementById('wf-link').value = w.link || '';
-  document.getElementById('workModal').classList.add('open');
-}
-
-function addWorkCard() {
-  data.works.push({
-    emoji: "📁",
-    category: "New Category",
-    title: "New Work Sample",
-    desc: "Describe what you did, tools used, and the outcome.",
-    img: ""
-  });
-  renderWorks();
-  openWorkEdit(data.works.length - 1);
-}
-
-function saveWork() {
-  if (editingWorkIndex === null) return;
-  data.works[editingWorkIndex] = {
-    category: document.getElementById('wf-cat').value,
-    title: document.getElementById('wf-title').value,
-    desc: document.getElementById('wf-desc').value,
-    emoji: document.getElementById('wf-emoji').value || '📁',
-    img: document.getElementById('wf-img').value,
-    link: document.getElementById('wf-link').value
-  };
-  saveData();
-  renderWorks();
-  closeWorkModal();
-  editingWorkIndex = null;
-}
-
-function closeWorkModal() {
-  document.getElementById('workModal').classList.remove('open');
-  editingWorkIndex = null;
-}
-
-document.getElementById('workModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('workModal')) closeWorkModal();
-});
-
-// ═══════════════════════════════════════════════
-//  SCROLL ANIMATIONS
-// ═══════════════════════════════════════════════
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
-
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// ═══════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════
-const VALID_ROLES = ['all','property','coordinator','va','guest','healthcare','marketing'];
-
-// Read role from URL on load
-const urlRole = new URLSearchParams(window.location.search).get('role');
-if (urlRole && VALID_ROLES.includes(urlRole)) {
-  currentRole = urlRole;
-  document.querySelectorAll('.role-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.role === urlRole);
-  });
-}
-
-renderAll();
-
-// Apply saved text to static editable fields
-document.querySelectorAll('[data-editable]').forEach(el => {
-  const key = el.dataset.editable;
-  if (key === 'tagline' && data.tagline) el.textContent = data.tagline;
-  if (key === 'contactSub' && data.contactSub) el.textContent = data.contactSub;
-});
-</script>
+  </script>
 </body>
 </html>
