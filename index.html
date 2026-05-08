@@ -32,7 +32,7 @@
     .reveal{opacity:0;transform:translateY(28px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
     .reveal.visible{opacity:1;transform:none}
     .reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}.reveal-d4{transition-delay:.4s}
-
+ 
     /* NAV */
     nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 0;transition:background .4s,padding .4s,border-color .4s;border-bottom:1px solid transparent}
     nav.scrolled{background:rgba(12,13,9,.94);backdrop-filter:blur(14px);padding:14px 0;border-color:var(--border)}
@@ -45,7 +45,7 @@
     .nav-cta{background:var(--moss)!important;color:var(--beige-lt)!important;padding:10px 22px;font-size:12px!important;font-weight:500!important;letter-spacing:.08em!important;text-transform:uppercase;transition:background .2s!important}
     .nav-cta:hover{background:var(--moss-lt)!important}
     @media(max-width:768px){.nav-links{display:none}}
-
+ 
     /* HERO */
     #hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;position:relative;overflow:hidden}
     .hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(138,173,90,.07) 0%,transparent 65%);top:5%;right:-15%;animation:glow 9s ease-in-out infinite;pointer-events:none}
@@ -78,7 +78,7 @@
     .avail-dot{width:8px;height:8px;border-radius:50%;background:#5A8A3A;box-shadow:0 0 8px rgba(90,138,58,.7);animation:pulse 2s infinite}
     @keyframes pulse{0%,100%{box-shadow:0 0 8px rgba(90,138,58,.7)}50%{box-shadow:0 0 18px rgba(90,138,58,1)}}
     @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:44px}.stat-row{flex-direction:row;flex-wrap:wrap}}
-
+ 
     /* MARQUEE */
     .marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0;overflow:hidden;background:var(--black2)}
     .marquee-track{display:flex;animation:marquee 30s linear infinite;width:max-content;white-space:nowrap}
@@ -86,13 +86,13 @@
     .marquee-item{font-family:var(--ff-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 28px;display:inline-flex;align-items:center;gap:28px}
     .marquee-item::after{content:'✦';color:var(--matcha);font-size:8px}
     @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
+ 
     /* SECTIONS */
     section{padding:112px 0;position:relative}
     .section-header{margin-bottom:64px}
     .section-header h2{font-size:clamp(34px,4.8vw,56px);font-weight:600;letter-spacing:-.025em}
     .section-header p{font-size:16px;color:var(--muted);max-width:500px;margin-top:16px;line-height:1.8}
-
+ 
     /* SERVICES */
     #services{background:var(--black2)}
     .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
@@ -109,7 +109,7 @@
     .service-card ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:6px}
     .service-card ul li{font-size:13px;color:var(--muted);padding-left:16px;position:relative}
     .service-card ul li::before{content:'→';position:absolute;left:0;color:var(--matcha);font-size:11px}
-
+ 
     /* HOW */
     #how{background:var(--black)}
     .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;position:relative}
@@ -120,7 +120,7 @@
     .step:hover .step-circle{border-color:var(--matcha);box-shadow:0 0 20px rgba(138,173,90,.2)}
     .step h3{font-size:18px;margin-bottom:10px}
     .step p{font-size:14px;color:var(--muted);line-height:1.75}
-
+ 
     /* PRICING */
     #pricing{background:var(--black2)}
     .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
@@ -145,7 +145,7 @@
     .plan.featured .plan-cta:hover{background:var(--moss-lt)}
     .pricing-note{text-align:center;margin-top:36px;font-size:13px;color:var(--muted)}
     .pricing-note strong{color:var(--beige);font-weight:400}
-
+ 
     /* CONTACT */
     #contact{background:var(--black)}
     .contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:72px;align-items:start}
@@ -173,7 +173,7 @@
     .form-status{margin-top:14px;font-size:13px;text-align:center;min-height:18px;color:var(--muted)}
     .form-status.success{color:#5A8A3A}
     .form-status.error{color:#c0392b}
-
+ 
     /* PORTFOLIO */
     #portfolio{display:none;background:var(--black);border-top:2px solid var(--moss)}
     #portfolio.active{display:block}
@@ -213,7 +213,7 @@
     .share-url{font-family:var(--ff-mono);font-size:12px;color:var(--matcha);background:rgba(74,92,47,.1);border:1px solid var(--border);padding:8px 14px;flex:1;min-width:180px;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .share-copy{background:var(--moss);color:var(--beige-lt);border:none;padding:10px 22px;font-family:var(--ff-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;white-space:nowrap}
     .share-copy:hover{background:var(--moss-lt)}
-
+ 
     /* FOOTER */
     footer{background:var(--black2);border-top:1px solid var(--border);padding:44px 0}
     .footer-inner{max-width:1120px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
@@ -223,7 +223,7 @@
     .footer-links a{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
     .footer-links a:hover{color:var(--beige)}
     .footer-copy{font-size:12px;color:var(--muted)}
-
+ 
     /* TOAST */
     .toast{position:fixed;bottom:28px;right:28px;background:var(--black3);border:1px solid var(--moss);color:var(--beige);padding:16px 22px;font-size:14px;z-index:999;transform:translateY(80px);opacity:0;transition:all .4s var(--ease);max-width:300px}
     .toast.show{transform:none;opacity:1}
@@ -231,7 +231,7 @@
   </style>
 </head>
 <body>
-
+ 
 <nav id="nav">
   <div class="nav-inner">
     <div class="nav-logo">N<span>.</span>Ynzon</div>
@@ -243,7 +243,7 @@
     </div>
   </div>
 </nav>
-
+ 
 <section id="hero">
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
@@ -276,13 +276,13 @@
     </div>
   </div>
 </section>
-
+ 
 <div class="marquee-wrap">
   <div class="marquee-track">
     <span class="marquee-item">Operations Management</span><span class="marquee-item">Social Media Strategy</span><span class="marquee-item">Customer Success</span><span class="marquee-item">SOP Building</span><span class="marquee-item">STR &amp; Property Ops</span><span class="marquee-item">Email Marketing</span><span class="marquee-item">Compliance Admin</span><span class="marquee-item">Guest Communications</span><span class="marquee-item">Operations Management</span><span class="marquee-item">Social Media Strategy</span><span class="marquee-item">Customer Success</span><span class="marquee-item">SOP Building</span><span class="marquee-item">STR &amp; Property Ops</span><span class="marquee-item">Email Marketing</span><span class="marquee-item">Compliance Admin</span><span class="marquee-item">Guest Communications</span>
   </div>
 </div>
-
+ 
 <section id="services">
   <div class="wrap">
     <div class="section-header reveal">
@@ -300,7 +300,7 @@
     </div>
   </div>
 </section>
-
+ 
 <section id="how">
   <div class="wrap">
     <div class="section-header reveal" style="text-align:center;max-width:540px;margin-left:auto;margin-right:auto">
@@ -314,7 +314,7 @@
     </div>
   </div>
 </section>
-
+ 
 <section id="pricing">
   <div class="wrap">
     <div class="section-header reveal">
@@ -330,7 +330,7 @@
     <p class="pricing-note reveal">Need something custom? <strong>Reach out below.</strong> Project-based engagements available for SOPs, launch campaigns, and compliance overhauls.</p>
   </div>
 </section>
-
+ 
 <section id="contact">
   <div class="wrap">
     <div class="contact-grid">
@@ -360,7 +360,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- HIDDEN PORTFOLIO — share via #portfolio/str | #portfolio/email | #portfolio/social | #portfolio/obm -->
 <section id="portfolio">
   <div class="wrap">
@@ -375,7 +375,7 @@
       <button class="role-tab" data-role="social" onclick="switchRole('social')">📣 Social Media Manager</button>
       <button class="role-tab" data-role="obm" onclick="switchRole('obm')">⚙️ Online Business Manager</button>
     </div>
-
+ 
     <!-- STR -->
     <div class="role-panel" id="panel-str">
       <div class="role-grid">
@@ -393,7 +393,7 @@
       </div>
       <div class="share-bar"><div class="share-label">Share this view: <strong>STR Property Manager</strong></div><div class="share-url" id="url-str"></div><button class="share-copy" onclick="copyLink('str')">Copy Link</button></div>
     </div>
-
+ 
     <!-- EMAIL -->
     <div class="role-panel" id="panel-email">
       <div class="role-grid">
@@ -411,7 +411,7 @@
       </div>
       <div class="share-bar"><div class="share-label">Share this view: <strong>Email Marketer</strong></div><div class="share-url" id="url-email"></div><button class="share-copy" onclick="copyLink('email')">Copy Link</button></div>
     </div>
-
+ 
     <!-- SOCIAL -->
     <div class="role-panel" id="panel-social">
       <div class="role-grid">
@@ -429,7 +429,7 @@
       </div>
       <div class="share-bar"><div class="share-label">Share this view: <strong>Social Media Manager</strong></div><div class="share-url" id="url-social"></div><button class="share-copy" onclick="copyLink('social')">Copy Link</button></div>
     </div>
-
+ 
     <!-- OBM -->
     <div class="role-panel" id="panel-obm">
       <div class="role-grid">
@@ -447,10 +447,10 @@
       </div>
       <div class="share-bar"><div class="share-label">Share this view: <strong>Online Business Manager</strong></div><div class="share-url" id="url-obm"></div><button class="share-copy" onclick="copyLink('obm')">Copy Link</button></div>
     </div>
-
+ 
   </div>
 </section>
-
+ 
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">N<span>.</span>Ynzon</div>
@@ -462,31 +462,31 @@
     <div class="footer-copy">&#169; 2026 Nilsy Ynzon. All rights reserved.</div>
   </div>
 </footer>
-
+ 
 <div class="toast" id="toast"><div class="toast-title" id="toast-title">Done</div><div id="toast-msg"></div></div>
-
+ 
 <script>
   const WEBHOOK_URL = "YOUR_MAKE_OR_ZAPIER_WEBHOOK_URL_HERE";
   const ROLES = ['str','email','social','obm'];
-
+ 
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
   });
-
+ 
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
+ 
   function getBaseUrl() { return window.location.origin + window.location.pathname; }
-
+ 
   function updateShareUrls() {
     ROLES.forEach(r => {
       const el = document.getElementById('url-' + r);
       if (el) el.textContent = getBaseUrl() + '#portfolio/' + r;
     });
   }
-
+ 
   function showPortfolio(role) {
     const sec = document.getElementById('portfolio');
     sec.classList.add('active');
@@ -495,14 +495,14 @@
     setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     updateShareUrls();
   }
-
+ 
   function switchRole(role) {
     document.querySelectorAll('.role-tab').forEach(t => t.classList.toggle('active', t.dataset.role === role));
     ROLES.forEach(r => document.getElementById('panel-' + r).classList.toggle('active', r === role));
     history.replaceState(null, '', '#portfolio/' + role);
     updateShareUrls();
   }
-
+ 
   function copyLink(role) {
     const url = getBaseUrl() + '#portfolio/' + role;
     navigator.clipboard.writeText(url).then(() => {
@@ -512,15 +512,15 @@
       if (el) { const r = document.createRange(); r.selectNode(el); window.getSelection().removeAllRanges(); window.getSelection().addRange(r); }
     });
   }
-
+ 
   function handleHash() {
     const h = window.location.hash;
     if (h.startsWith('#portfolio')) { const p = h.split('/'); showPortfolio(p[1] || 'str'); }
   }
-
+ 
   window.addEventListener('hashchange', handleHash);
   window.addEventListener('load', handleHash);
-
+ 
   async function submitLead() {
     const btn = document.getElementById('submitBtn');
     const status = document.getElementById('formStatus');
@@ -539,7 +539,7 @@
       showFormSuccess(fname);
     } catch { btn.disabled = false; btn.textContent = 'Send It Over \u2192'; status.textContent = 'Something went wrong. Email me at workwithme.nilsy@gmail.com'; status.className = 'form-status error'; }
   }
-
+ 
   function showFormSuccess(name) {
     ['fname','lname','email','problem'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('biztype').selectedIndex = 0;
@@ -547,7 +547,7 @@
     const btn = document.getElementById('submitBtn'); btn.disabled = false; btn.textContent = 'Send It Over \u2192';
     showToast('Got it, ' + (name || 'friend') + '.', "I'll be in your inbox within 24 hours.");
   }
-
+ 
   function showToast(title, msg) {
     document.getElementById('toast-title').textContent = '\u2726 ' + title;
     document.getElementById('toast-msg').textContent = msg;
