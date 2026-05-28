@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nilsy Ynzon — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --black:#0C0D09;--black2:#131509;--black3:#1C1F12;
+  --moss:#4A5C2F;--moss-lt:#5E7540;
+  --matcha:#8AAD5A;--matcha-lt:#A8C87A;
+  --beige:#E8D9B5;--beige-lt:#F3EDD8;
+  --muted:#7A7A60;--border:rgba(74,92,47,0.28);
+  --card-bg:rgba(255,255,255,0.025);
+  --ff-head:'Playfair Display',Georgia,serif;
+  --ff-body:'DM Sans',sans-serif;
+  --ff-mono:'DM Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--beige);font-family:var(--ff-body);font-weight:300;line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");background-size:180px;pointer-events:none;z-index:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
+h1,h2,h3{font-family:var(--ff-head);font-weight:600;line-height:1.15}
+a{color:inherit;text-decoration:none}
+.tag{font-family:var(--ff-mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--matcha);display:inline-flex;align-items:center;gap:10px;margin-bottom:16px}
+.tag::before{content:'';width:28px;height:1px;background:var(--matcha);display:inline-block}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}.reveal-d4{transition-delay:.4s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 0;transition:background .4s,padding .4s,border-color .4s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(12,13,9,.95);backdrop-filter:blur(14px);padding:14px 0;border-color:var(--border)}
+.nav-inner{max-width:1120px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--ff-head);font-size:20px;font-weight:700;letter-spacing:-.02em}
+.nav-logo span{color:var(--matcha)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:12px;letter-spacing:.05em;color:var(--muted);transition:color .2s;text-transform:uppercase}
+.nav-links a:hover{color:var(--beige)}
+.nav-cta{background:var(--moss)!important;color:var(--beige-lt)!important;padding:10px 20px;font-size:11px!important;letter-spacing:.1em!important;text-transform:uppercase!important;transition:background .2s!important}
+.nav-cta:hover{background:var(--moss-lt)!important}
+@media(max-width:768px){.nav-links{display:none}}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(138,173,90,.07) 0%,transparent 65%);top:5%;right:-15%;animation:glow 9s ease-in-out infinite;pointer-events:none}
+.hero-glow2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(74,92,47,.08) 0%,transparent 65%);bottom:10%;left:-8%;animation:glow 11s ease-in-out 2s infinite;pointer-events:none}
+@keyframes glow{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.2);opacity:1}}
+.hero-layout{display:grid;grid-template-columns:1fr 340px;gap:64px;align-items:center}
+.eyebrow{font-family:var(--ff-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--matcha);display:flex;align-items:center;gap:14px;margin-bottom:24px;opacity:0;animation:up .8s var(--ease) .2s forwards}
+.eyebrow::before{content:'';width:36px;height:1px;background:var(--matcha)}
+.hero-h1{font-size:clamp(42px,6vw,78px);font-weight:700;line-height:1.0;letter-spacing:-.03em;margin-bottom:24px}
+.hero-h1 .line{display:block;opacity:0;transform:translateY(36px)}
+.hero-h1 .line:nth-child(1){animation:up .9s var(--ease) .3s forwards}
+.hero-h1 .line:nth-child(2){animation:up .9s var(--ease) .45s forwards;color:var(--matcha);font-style:italic}
+.hero-h1 .line:nth-child(3){animation:up .9s var(--ease) .6s forwards}
+@keyframes up{to{opacity:1;transform:none}}
+.hero-sub{font-size:16px;color:var(--muted);max-width:540px;line-height:1.85;margin-bottom:36px;opacity:0;animation:up .9s var(--ease) .75s forwards}
+.hero-sub strong{color:var(--beige);font-weight:400}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:up .9s var(--ease) .9s forwards}
+.btn-primary{background:var(--moss);color:var(--beige-lt);padding:15px 32px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;display:inline-block;transition:background .25s,transform .25s}
+.btn-primary:hover{background:var(--moss-lt);transform:translateY(-2px)}
+.btn-ghost{border:1px solid var(--border);color:var(--beige);padding:15px 32px;font-size:12px;font-weight:300;letter-spacing:.08em;text-transform:uppercase;display:inline-block;transition:border-color .25s,background .25s}
+.btn-ghost:hover{border-color:var(--matcha);background:rgba(138,173,90,.07)}
+.hero-card{background:var(--card-bg);border:1px solid var(--border);padding:36px 32px;opacity:0;animation:up 1s var(--ease) .5s forwards}
+.hero-card-label{font-family:var(--ff-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--matcha);margin-bottom:24px}
+.stat-row{display:flex;flex-direction:column;gap:20px}
+.stat-num{font-family:var(--ff-head);font-size:38px;font-weight:700;line-height:1}
+.stat-num span{color:var(--matcha)}
+.stat-desc{font-size:12px;color:var(--muted);letter-spacing:.04em;margin-top:4px}
+.stat-div{height:1px;background:var(--border)}
+.avail{display:flex;align-items:center;gap:10px;margin-top:24px;font-size:12px;color:var(--muted)}
+.avail-dot{width:8px;height:8px;border-radius:50%;background:#5A8A3A;box-shadow:0 0 8px rgba(90,138,58,.7);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{box-shadow:0 0 8px rgba(90,138,58,.7)}50%{box-shadow:0 0 18px rgba(90,138,58,1)}}
+@media(max-width:900px){.hero-layout{grid-template-columns:1fr}}
+
+/* MARQUEE */
+.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0;overflow:hidden;background:var(--black2)}
+.marquee-track{display:flex;animation:marquee 32s linear infinite;width:max-content;white-space:nowrap}
+.marquee-track:hover{animation-play-state:paused}
+.marquee-item{font-family:var(--ff-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 24px;display:inline-flex;align-items:center;gap:24px}
+.marquee-item::after{content:'✦';color:var(--matcha);font-size:8px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:96px 0;position:relative}
+.section-header{margin-bottom:56px}
+.section-header h2{font-size:clamp(32px,4.5vw,52px);font-weight:600;letter-spacing:-.025em}
+.section-header p{font-size:15px;color:var(--muted);max-width:500px;margin-top:14px;line-height:1.8}
+
+/* ROLES SECTION */
+#roles{background:var(--black2)}
+.roles-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+@media(max-width:700px){.roles-grid{grid-template-columns:1fr}}
+.role-card{background:var(--black);padding:40px 36px;position:relative;overflow:hidden;transition:background .3s}
+.role-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--moss),var(--matcha));transition:width .5s var(--ease)}
+.role-card:hover{background:var(--black3)}
+.role-card:hover::after{width:100%}
+.role-num{font-family:var(--ff-mono);font-size:11px;color:var(--matcha);letter-spacing:.12em;margin-bottom:12px;display:block}
+.role-emoji{font-size:28px;margin-bottom:16px;display:block}
+.role-card h3{font-size:20px;font-weight:600;margin-bottom:8px}
+.role-card .role-clients{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--matcha);margin-bottom:14px}
+.role-card p{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:14px}
+.role-card ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.role-card ul li{font-size:13px;color:var(--muted);padding-left:16px;position:relative;line-height:1.5}
+.role-card ul li::before{content:'→';position:absolute;left:0;color:var(--matcha);font-size:11px;top:3px}
+
+/* CLIENTS / BUSINESSES */
+#clients{background:var(--black)}
+.clients-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+@media(max-width:800px){.clients-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.clients-grid{grid-template-columns:1fr}}
+.client-card{background:var(--card-bg);border:1px solid var(--border);padding:32px 28px;transition:background .3s,border-color .3s}
+.client-card:hover{background:rgba(74,92,47,.08);border-color:var(--moss)}
+.client-icon{font-size:24px;margin-bottom:14px;display:block}
+.client-name{font-family:var(--ff-head);font-size:17px;font-weight:600;margin-bottom:6px}
+.client-role{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--matcha);margin-bottom:12px}
+.client-desc{font-size:13px;color:var(--muted);line-height:1.7}
+.client-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.ctag{font-family:var(--ff-mono);font-size:10px;padding:3px 9px;background:rgba(74,92,47,.18);border:1px solid rgba(74,92,47,.3);color:var(--matcha)}
+
+/* FUNCTIONS */
+#functions{background:var(--black2)}
+.functions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+@media(max-width:900px){.functions-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.functions-grid{grid-template-columns:1fr}}
+.fn-card{background:var(--black);padding:28px 24px;transition:background .25s}
+.fn-card:hover{background:var(--black3)}
+.fn-icon{font-size:22px;margin-bottom:12px;display:block}
+.fn-title{font-size:15px;font-weight:500;margin-bottom:8px;font-family:var(--ff-head)}
+.fn-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.fn-list li{font-size:12px;color:var(--muted);padding-left:12px;position:relative}
+.fn-list li::before{content:'·';position:absolute;left:0;color:var(--matcha)}
+
+/* TOOLS */
+#tools{background:var(--black)}
+.tools-intro{font-size:15px;color:var(--muted);max-width:600px;line-height:1.8;margin-bottom:48px}
+.tools-categories{display:flex;flex-direction:column;gap:40px}
+.tool-category-label{font-family:var(--ff-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--matcha);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.tool-category-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.tools-row{display:flex;flex-wrap:wrap;gap:10px}
+.tool-chip{font-family:var(--ff-mono);font-size:11px;letter-spacing:.06em;padding:8px 14px;border:1px solid var(--border);color:var(--muted);transition:all .2s;cursor:default;display:flex;align-items:center;gap:7px}
+.tool-chip:hover{border-color:var(--matcha);color:var(--matcha);background:rgba(138,173,90,.06)}
+.tool-chip.hero-tool{border-color:var(--moss);color:var(--matcha);background:rgba(74,92,47,.15)}
+.tool-chip.hero-tool::before{content:'★';font-size:9px;color:var(--matcha)}
+
+/* PORTFOLIO */
+#portfolio{background:var(--black2)}
+.portfolio-note{font-size:14px;color:var(--muted);line-height:1.8;max-width:600px;margin-bottom:48px;padding:20px 24px;border-left:2px solid var(--moss);background:rgba(74,92,47,.08)}
+.portfolio-note strong{color:var(--beige);font-weight:400}
+.portfolio-tabs{display:flex;gap:0;margin-bottom:40px;flex-wrap:wrap;border:1px solid var(--border)}
+.ptab{flex:1;min-width:140px;background:transparent;border:none;border-right:1px solid var(--border);color:var(--muted);padding:14px 18px;font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .25s}
+.ptab:last-child{border-right:none}
+.ptab:hover{color:var(--beige);background:rgba(255,255,255,.03)}
+.ptab.active{background:var(--moss);color:var(--beige-lt)}
+.ppanel{display:none}
+.ppanel.active{display:block}
+.psamples-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:32px}
+@media(max-width:700px){.psamples-grid{grid-template-columns:1fr}}
+.psample{background:var(--black);border-bottom:2px solid transparent;padding:28px;transition:border-color .3s,background .3s;position:relative}
+.psample:hover{background:var(--black3);border-color:var(--matcha)}
+.psample-emoji{font-size:22px;margin-bottom:12px;display:block}
+.psample h4{font-size:14px;font-weight:600;margin-bottom:8px}
+.psample p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:14px}
+.psample-link{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--matcha);display:inline-flex;align-items:center;gap:6px;border-bottom:1px solid rgba(138,173,90,.3);padding-bottom:2px;transition:border-color .2s}
+.psample-link:hover{border-color:var(--matcha)}
+.psample-link::after{content:'↗';font-size:10px}
+.share-bar{background:var(--black);border:1px solid var(--border);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.share-label{font-size:13px;color:var(--muted)}
+.share-label strong{color:var(--beige);font-weight:500}
+.share-url{font-family:var(--ff-mono);font-size:11px;color:var(--matcha);background:rgba(74,92,47,.1);border:1px solid var(--border);padding:7px 12px;flex:1;min-width:160px;max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.share-copy{background:var(--moss);color:var(--beige-lt);border:none;padding:9px 18px;font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;white-space:nowrap}
+.share-copy:hover{background:var(--moss-lt)}
+
+/* CREDENTIALS */
+#credentials{background:var(--black)}
+.creds-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:40px}
+@media(max-width:700px){.creds-grid{grid-template-columns:1fr}}
+.cred-group-label{font-family:var(--ff-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--matcha);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.cred-group-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.cred-items{display:flex;flex-direction:column;gap:14px}
+.cred-item{background:var(--card-bg);border:1px solid var(--border);padding:20px 22px;display:flex;align-items:flex-start;gap:16px;transition:border-color .25s}
+.cred-item:hover{border-color:var(--moss)}
+.cred-badge{font-size:20px;flex-shrink:0;margin-top:2px}
+.cred-body{}
+.cred-name{font-size:14px;font-weight:500;font-family:var(--ff-head);margin-bottom:3px}
+.cred-issuer{font-family:var(--ff-mono);font-size:10px;letter-spacing:.08em;color:var(--matcha);text-transform:uppercase}
+.cred-year{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* FOOTER / CTA */
+#cta{background:var(--black2)}
+.cta-inner{display:grid;grid-template-columns:1fr 400px;gap:64px;align-items:center;padding:80px 0}
+@media(max-width:800px){.cta-inner{grid-template-columns:1fr;gap:40px}}
+.cta-inner h2{font-size:clamp(30px,4.2vw,48px);margin-bottom:16px}
+.cta-inner h2 em{color:var(--matcha);font-style:italic}
+.cta-inner p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:32px}
+.cta-links{display:flex;gap:14px;flex-wrap:wrap}
+
+footer{background:var(--black);border-top:1px solid var(--border);padding:40px 0}
+.footer-inner{max-width:1120px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-logo{font-family:var(--ff-head);font-size:18px;font-weight:700}
+.footer-logo span{color:var(--matcha)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+.footer-links a:hover{color:var(--beige)}
+.footer-copy{font-size:11px;color:var(--muted)}
+
+.toast{position:fixed;bottom:28px;right:28px;background:var(--black3);border:1px solid var(--moss);color:var(--beige);padding:16px 20px;font-size:14px;z-index:999;transform:translateY(80px);opacity:0;transition:all .4s var(--ease);max-width:280px}
+.toast.show{transform:none;opacity:1}
+.toast-title{font-weight:500;margin-bottom:3px;color:var(--matcha);font-size:11px;letter-spacing:.05em;font-family:var(--ff-mono);text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">N<span>.</span>Ynzon</div>
+    <div class="nav-links">
+      <a href="#roles">Roles</a>
+      <a href="#clients">Clients</a>
+      <a href="#tools">Tools</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#credentials">Credentials</a>
+      <a href="index.html" class="nav-cta">Hire Me</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="wrap">
+    <div class="hero-layout">
+      <div>
+        <div class="eyebrow">Operations · Marketing · Systems</div>
+        <h1 class="hero-h1">
+          <span class="line">The person who</span>
+          <span class="line">runs the business</span>
+          <span class="line">behind the business.</span>
+        </h1>
+        <p class="hero-sub">I'm Nilsy — a multi-hyphenate freelance operator with 8+ years of remote work across <strong>STR management, social media, compliance, customer success, and business operations.</strong> Five active clients. One mission: make everything run without you in the room.</p>
+        <div class="hero-btns">
+          <a href="#portfolio" class="btn-primary">See the Work</a>
+          <a href="#roles" class="btn-ghost">Explore Roles</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-label">At a Glance</div>
+        <div class="stat-row">
+          <div><div class="stat-num">8<span>+</span></div><div class="stat-desc">Years remote ops across 5+ industries</div></div>
+          <div class="stat-div"></div>
+          <div><div class="stat-num">5</div><div class="stat-desc">Active US-based clients simultaneously</div></div>
+          <div class="stat-div"></div>
+          <div><div class="stat-num">C2</div><div class="stat-desc">English · EF SET 85/100</div></div>
+          <div class="stat-div"></div>
+          <div><div class="stat-num">12<span>+</span></div><div class="stat-desc">Systems, SOPs, and automations built</div></div>
+        </div>
+        <div class="avail"><span class="avail-dot"></span><span>1 retainer spot open · PHT timezone</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Operations Management</span><span class="marquee-item">Social Media Strategy</span><span class="marquee-item">Customer Success</span><span class="marquee-item">SOP Building</span><span class="marquee-item">STR &amp; Property Ops</span><span class="marquee-item">Email Marketing</span><span class="marquee-item">Compliance Admin</span><span class="marquee-item">AI-Powered Workflows</span><span class="marquee-item">GHL Automations</span><span class="marquee-item">Canva Design</span><span class="marquee-item">Notion Systems</span><span class="marquee-item">Guest Communications</span><span class="marquee-item">Operations Management</span><span class="marquee-item">Social Media Strategy</span><span class="marquee-item">Customer Success</span><span class="marquee-item">SOP Building</span><span class="marquee-item">STR &amp; Property Ops</span><span class="marquee-item">Email Marketing</span><span class="marquee-item">Compliance Admin</span><span class="marquee-item">AI-Powered Workflows</span><span class="marquee-item">GHL Automations</span><span class="marquee-item">Canva Design</span><span class="marquee-item">Notion Systems</span><span class="marquee-item">Guest Communications</span>
+  </div>
+</div>
+
+<!-- ROLES -->
+<section id="roles">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="tag">Where I Shine</div>
+      <h2>Four roles. All running<br/>at the same time.</h2>
+      <p>I don't pick a lane — I manage whichever one your business needs most urgently.</p>
+    </div>
+    <div class="roles-grid">
+
+      <div class="role-card reveal reveal-d1">
+        <span class="role-num">01</span>
+        <span class="role-emoji">🏡</span>
+        <h3>STR &amp; Property Operations Manager</h3>
+        <div class="role-clients">Elevate Vacation Homes</div>
+        <p>End-to-end short-term rental management — from guest messaging and dynamic pricing to damage disputes and listing optimization. Sub-1-hour response standard across a multi-property portfolio.</p>
+        <ul>
+          <li>Guest communication lifecycle (pre-arrival to post-stay reviews)</li>
+          <li>Damage dispute handling with professional documentation</li>
+          <li>Dynamic pricing via PriceLabs, Wheelhouse, Beyond Pricing</li>
+          <li>SOP creation for check-in, turnover, and escalation workflows</li>
+          <li>Listing optimization for Airbnb and VRBO visibility</li>
+          <li>Compliance correspondence — permits, licenses, regulatory filings</li>
+        </ul>
+      </div>
+
+      <div class="role-card reveal reveal-d2">
+        <span class="role-num">02</span>
+        <span class="role-emoji">📣</span>
+        <h3>Social Media Manager &amp; Strategist</h3>
+        <div class="role-clients">Suspending Time Aesthetics · CamaPlan</div>
+        <p>Full content operations — strategy, creation, scheduling, and tracking. I build the system so content ships on time every week without you touching it.</p>
+        <ul>
+          <li>Weekly content engine: static, carousel, 2 reels, wildcard — every week</li>
+          <li>Canva design system using locked brand kits — on-brand at scale</li>
+          <li>Caption writing, hashtag research, CTA strategy</li>
+          <li>Content calendars and editorial planning in Notion</li>
+          <li>Performance-informed content pivots based on reach and engagement</li>
+          <li>Lead gen campaigns tied to real business goals (bookings, inquiries)</li>
+        </ul>
+      </div>
+
+      <div class="role-card reveal reveal-d3">
+        <span class="role-num">03</span>
+        <span class="role-emoji">⚙️</span>
+        <h3>Online Business Manager</h3>
+        <div class="role-clients">Watson Media House · BMG Philly</div>
+        <p>The person who holds everything together. I run operations across multiple US clients simultaneously — systems, reporting, communications, and people coordination.</p>
+        <ul>
+          <li>Client onboarding workflows, SOPs, and delivery management</li>
+          <li>Multi-client calendar management across US timezones</li>
+          <li>Compliance administration — Philadelphia L&amp;I, regulatory filings, license renewals</li>
+          <li>Weekly reporting, ops dashboards, and status documentation</li>
+          <li>Make.com and GHL automation builds for lead capture and client comms</li>
+          <li>Meeting notes in CLEANED format — numbered, action-oriented, deadline-tracked</li>
+        </ul>
+      </div>
+
+      <div class="role-card reveal reveal-d4">
+        <span class="role-num">04</span>
+        <span class="role-emoji">✉️</span>
+        <h3>Email Marketer &amp; Funnel Builder</h3>
+        <div class="role-clients">Jansson Logistics · Search Party Recruiting · Watson Media House</div>
+        <p>Story-driven email that converts without being pushy. I write campaigns using Hormozi's directness and Brunson's emotional architecture — then set up the automations so it all runs on its own.</p>
+        <ul>
+          <li>Lead nurture sequences, cold outreach, and re-engagement campaigns</li>
+          <li>GHL email automation setup — 4-campaign architecture for retainer offers</li>
+          <li>Newsletter strategy and monthly editorial production</li>
+          <li>Lead gen PDF creation tied to email campaigns</li>
+          <li>Landing page + form + webhook integrations (GitHub → Make.com → Notion)</li>
+          <li>Sales funnel optimization with landing pages and automated follow-up</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="tag">Businesses I've Worked With</div>
+      <h2>Five active clients.<br/>Each one a different world.</h2>
+      <p>Across industries, timezones, and functions — I manage them all simultaneously without anything dropping.</p>
+    </div>
+    <div class="clients-grid">
+
+      <div class="client-card reveal reveal-d1">
+        <span class="client-icon">🏡</span>
+        <div class="client-name">Elevate Vacation Homes</div>
+        <div class="client-role">Remote Property Manager · Guest Communications</div>
+        <p class="client-desc">US-based short-term rental company. I manage guest communications, handle disputes, coordinate vendors, and maintain listing quality across their portfolio.</p>
+        <div class="client-tags"><span class="ctag">STR</span><span class="ctag">Airbnb</span><span class="ctag">Guest Comms</span></div>
+      </div>
+
+      <div class="client-card reveal reveal-d2">
+        <span class="client-icon">🏙️</span>
+        <div class="client-name">BMG Philly</div>
+        <div class="client-role">Compliance Administrator</div>
+        <p class="client-desc">Philadelphia property management firm. I handle regulatory correspondence, license renewals, COI filings, and all compliance documentation with Philadelphia L&amp;I.</p>
+        <div class="client-tags"><span class="ctag">Compliance</span><span class="ctag">Property Mgmt</span><span class="ctag">Philadelphia</span></div>
+      </div>
+
+      <div class="client-card reveal reveal-d3">
+        <span class="client-icon">🎬</span>
+        <div class="client-name">Watson Media House</div>
+        <div class="client-role">Operations Manager · CSM</div>
+        <p class="client-desc">US media company. I run operations and serve as Customer Success Manager — client onboarding, delivery management, cross-team coordination, and retention workflows.</p>
+        <div class="client-tags"><span class="ctag">OBM</span><span class="ctag">CSM</span><span class="ctag">Media</span></div>
+      </div>
+
+      <div class="client-card reveal reveal-d1">
+        <span class="client-icon">💰</span>
+        <div class="client-name">CamaPlan</div>
+        <div class="client-role">Social Media Manager</div>
+        <p class="client-desc">Self-directed IRA financial services company. I create educational, trust-building social content that makes alternative investment concepts accessible to general audiences.</p>
+        <div class="client-tags"><span class="ctag">Social Media</span><span class="ctag">Finance</span><span class="ctag">Education</span></div>
+      </div>
+
+      <div class="client-card reveal reveal-d2">
+        <span class="client-icon">💆</span>
+        <div class="client-name">Suspending Time Aesthetics</div>
+        <div class="client-role">Marketing Manager · Social Media Strategist</div>
+        <p class="client-desc">Medical aesthetics clinic in St. Catharines, Ontario. I run full social media operations and marketing strategy — content, design, campaigns, and lead gen.</p>
+        <div class="client-tags"><span class="ctag">Social Media</span><span class="ctag">Marketing</span><span class="ctag">Healthcare</span></div>
+      </div>
+
+      <div class="client-card reveal reveal-d3">
+        <span class="client-icon">🔍</span>
+        <div class="client-name">Search Party Recruiting</div>
+        <div class="client-role">Email Marketing · Growth Specialist</div>
+        <p class="client-desc">Remote recruiting firm. I managed email outreach campaigns, blog content production (Remote Work pillar), and marketing funnel optimization targeting US entrepreneurs.</p>
+        <div class="client-tags"><span class="ctag">Email</span><span class="ctag">Content</span><span class="ctag">Recruiting</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FUNCTIONS -->
+<section id="functions">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="tag">Functions I Perform</div>
+      <h2>What actually gets done<br/>when you work with me.</h2>
+    </div>
+    <div class="functions-grid">
+      <div class="fn-card reveal reveal-d1">
+        <span class="fn-icon">📋</span>
+        <div class="fn-title">Systems &amp; SOPs</div>
+        <ul class="fn-list">
+          <li>SOP writing and documentation</li>
+          <li>Workflow mapping</li>
+          <li>Process optimization</li>
+          <li>Onboarding playbooks</li>
+          <li>Training decks</li>
+        </ul>
+      </div>
+      <div class="fn-card reveal reveal-d2">
+        <span class="fn-icon">🤖</span>
+        <div class="fn-title">Automations</div>
+        <ul class="fn-list">
+          <li>GHL campaign setup</li>
+          <li>Make.com workflows</li>
+          <li>Webhook integrations</li>
+          <li>Form-to-CRM pipelines</li>
+          <li>Email automation sequences</li>
+        </ul>
+      </div>
+      <div class="fn-card reveal reveal-d3">
+        <span class="fn-icon">📣</span>
+        <div class="fn-title">Social Media</div>
+        <ul class="fn-list">
+          <li>Strategy and planning</li>
+          <li>Content calendar creation</li>
+          <li>Canva design execution</li>
+          <li>Reel scripting &amp; direction</li>
+          <li>Caption writing &amp; scheduling</li>
+        </ul>
+      </div>
+      <div class="fn-card reveal reveal-d4">
+        <span class="fn-icon">✉️</span>
+        <div class="fn-title">Email Marketing</div>
+        <ul class="fn-list">
+          <li>Nurture sequences</li>
+          <li>Cold outreach campaigns</li>
+          <li>Newsletter production</li>
+          <li>Funnel copywriting</li>
+          <li>Lead gen PDF creation</li>
+        </ul>
+      </div>
+      <div class="fn-card reveal reveal-d1">
+        <span class="fn-icon">🏡</span>
+        <div class="fn-title">STR Operations</div>
+        <ul class="fn-list">
+          <li>Guest communication</li>
+          <li>Dispute resolution</li>
+          <li>Dynamic pricing setup</li>
+          <li>Listing optimization</li>
+          <li>Turnover coordination</li>
+        </ul>
+      </div>
+      <div class="fn-card reveal reveal-d2">
+        <span class="fn-icon">🤝</span>
+        <div class="fn-title">Customer Success</div>
+        <ul class="fn-list">
+          <li>Client onboarding</li>
+          <li>Retention workflows</li>
+          <li>Escalation management</li>
+          <li>Account management</li>
+          <li>CSM documentation</li>
+        </ul>
+      </div>
+      <div class="fn-card reveal reveal-d3">
+        <span class="fn-icon">⚖️</span>
+        <div class="fn-title">Compliance &amp; Admin</div>
+        <ul class="fn-list">
+          <li>Regulatory correspondence</li>
+          <li>License tracking</li>
+          <li>Documentation trails</li>
+          <li>Letter of Attestation</li>
+          <li>Agency filings (L&amp;I)</li>
+        </ul>
+      </div>
+      <div class="fn-card reveal reveal-d4">
+        <span class="fn-icon">📊</span>
+        <div class="fn-title">Reporting &amp; Strategy</div>
+        <ul class="fn-list">
+          <li>Weekly ops reporting</li>
+          <li>KPI dashboard setup</li>
+          <li>Marketing strategy docs</li>
+          <li>Meeting notes (CLEANED)</li>
+          <li>Financial tracking systems</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="tag">Tools &amp; Platforms</div>
+      <h2>What I actually work in<br/>every day.</h2>
+    </div>
+    <p class="tools-intro reveal">I'm tool-agnostic and pick up new platforms fast. The starred ones are where I live — Claude and GoHighLevel in particular have become core to how I build and deliver client work.</p>
+    <div class="tools-categories reveal">
+      <div>
+        <div class="tool-category-label">AI &amp; Automation — the ones that change everything</div>
+        <div class="tools-row">
+          <span class="tool-chip hero-tool">Claude AI</span>
+          <span class="tool-chip hero-tool">GoHighLevel (GHL)</span>
+          <span class="tool-chip hero-tool">Make.com</span>
+          <span class="tool-chip">Zapier</span>
+          <span class="tool-chip">Webhook integrations</span>
+          <span class="tool-chip">ChatGPT</span>
+        </div>
+      </div>
+      <div>
+        <div class="tool-category-label">Project Management &amp; Ops</div>
+        <div class="tools-row">
+          <span class="tool-chip hero-tool">Notion</span>
+          <span class="tool-chip">Monday.com</span>
+          <span class="tool-chip">Asana</span>
+          <span class="tool-chip">Trello</span>
+          <span class="tool-chip">Google Workspace</span>
+          <span class="tool-chip">Slack</span>
+          <span class="tool-chip">Zoom</span>
+          <span class="tool-chip">Calendly</span>
+          <span class="tool-chip">Loom</span>
+        </div>
+      </div>
+      <div>
+        <div class="tool-category-label">Content &amp; Design</div>
+        <div class="tools-row">
+          <span class="tool-chip hero-tool">Canva</span>
+          <span class="tool-chip">CapCut</span>
+          <span class="tool-chip">Meta Business Suite</span>
+          <span class="tool-chip">Later</span>
+          <span class="tool-chip">Buffer</span>
+          <span class="tool-chip">TikTok</span>
+          <span class="tool-chip">Instagram</span>
+          <span class="tool-chip">LinkedIn</span>
+        </div>
+      </div>
+      <div>
+        <div class="tool-category-label">Email &amp; CRM</div>
+        <div class="tools-row">
+          <span class="tool-chip">Mailchimp</span>
+          <span class="tool-chip">ActiveCampaign</span>
+          <span class="tool-chip">ConvertKit</span>
+          <span class="tool-chip">Klaviyo</span>
+          <span class="tool-chip">HubSpot</span>
+          <span class="tool-chip">MeetAlfred</span>
+        </div>
+      </div>
+      <div>
+        <div class="tool-category-label">STR &amp; Property</div>
+        <div class="tools-row">
+          <span class="tool-chip">Airbnb</span>
+          <span class="tool-chip">VRBO</span>
+          <span class="tool-chip">PriceLabs</span>
+          <span class="tool-chip">Wheelhouse</span>
+          <span class="tool-chip">Beyond Pricing</span>
+          <span class="tool-chip">Hostaway</span>
+          <span class="tool-chip">Hospitable</span>
+          <span class="tool-chip">Turno</span>
+        </div>
+      </div>
+      <div>
+        <div class="tool-category-label">Docs, Finance &amp; Payments</div>
+        <div class="tools-row">
+          <span class="tool-chip">Microsoft Excel / Word</span>
+          <span class="tool-chip">Google Sheets</span>
+          <span class="tool-chip">Deel</span>
+          <span class="tool-chip">Wise</span>
+          <span class="tool-chip">GitHub Pages</span>
+          <span class="tool-chip">Claude Code</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="tag">Sample Portfolio</div>
+      <h2>Real work. Real clients.<br/>Real results.</h2>
+    </div>
+    <div class="portfolio-note reveal">
+      <strong>How to use this:</strong> Select the tab for the role you're hiring for. Each tab shows the most relevant work samples. Some items link out to Canva or live pages — others are available on request. <strong>Want to connect your Canva?</strong> I can add direct design previews to any of these cards.
+    </div>
+    <div class="portfolio-tabs reveal">
+      <button class="ptab active" data-tab="str" onclick="switchTab('str')">🏡 STR &amp; Property</button>
+      <button class="ptab" data-tab="social" onclick="switchTab('social')">📣 Social Media</button>
+      <button class="ptab" data-tab="ops" onclick="switchTab('ops')">⚙️ Operations</button>
+      <button class="ptab" data-tab="email" onclick="switchTab('email')">✉️ Email &amp; Funnels</button>
+    </div>
+
+    <!-- STR -->
+    <div class="ppanel active" id="tab-str">
+      <div class="psamples-grid">
+        <div class="psample"><span class="psample-emoji">💬</span><h4>Guest Communication SOP</h4><p>Full messaging suite — pre-arrival to post-stay review requests. Warm, professional, brand-aligned tone. Escalation triggers documented.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">⚖️</span><h4>Damage Dispute Framework</h4><p>Professional dispute correspondence with timeline documentation. Evidence-based, firm tone that doesn't escalate unnecessarily.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">📋</span><h4>Turnover SOP</h4><p>Room-by-room cleaning and restocking checklist for cleaning teams. Quality control checkpoints and photo documentation guide.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">📈</span><h4>Listing Optimization Audit</h4><p>Airbnb and VRBO listing rewrite — title, description, photo sequencing, amenity highlights. SEO-informed for OTA algorithm.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">💰</span><h4>PriceLabs Pricing Strategy</h4><p>Base rate setup, seasonal rules, minimum night logic, and gap-fill strategy for a 3-property STR portfolio.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">📍</span><h4>Guest Welcome Guide</h4><p>Fully branded digital guide — house rules, local recs, nearby gyms, restaurants, emergency contacts. Built in Notion and Canva.</p><a href="#" class="psample-link">Request sample</a></div>
+      </div>
+      <div class="share-bar"><div class="share-label">Share this view: <strong>STR &amp; Property</strong></div><div class="share-url" id="su-str"></div><button class="share-copy" onclick="copyLink('str')">Copy Link</button></div>
+    </div>
+
+    <!-- SOCIAL -->
+    <div class="ppanel" id="tab-social">
+      <div class="psamples-grid">
+        <div class="psample"><span class="psample-emoji">📅</span><h4>4-Week Content Calendar</h4><p>Full month of content for a medical aesthetics clinic — type, copy direction, visual notes, and publish times built in Notion.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">🖼️</span><h4>Canva Brand Kit Execution</h4><p>Static and carousel posts built inside brand-locked Canva kits. Clean, minimal, non-tacky — Tex Gyre Termes typography system.</p><a href="https://www.canva.com" target="_blank" class="psample-link">View in Canva</a></div>
+        <div class="psample"><span class="psample-emoji">🎞️</span><h4>Reel Content Pipeline</h4><p>End-to-end reel system — raw video brief, hook script, caption, and CTA per video. 2 reels per week, 8 per month.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">📝</span><h4>Caption Writing System</h4><p>30-caption batch for an aesthetic clinic — educational, storytelling, and promotional mix with CTAs and hashtag sets.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">📊</span><h4>Brand Strategy Document</h4><p>Full brand playbook — audience persona, platform strategy, content pillars, posting frequency, and KPI benchmarks.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">🎯</span><h4>Mother's Day Lead Gen Campaign</h4><p>Full campaign — reels, static posts, captions, and a 10-page lead gen PDF. Drove consultation bookings for an aesthetics clinic.</p><a href="#" class="psample-link">Request sample</a></div>
+      </div>
+      <div class="share-bar"><div class="share-label">Share this view: <strong>Social Media</strong></div><div class="share-url" id="su-social"></div><button class="share-copy" onclick="copyLink('social')">Copy Link</button></div>
+    </div>
+
+    <!-- OPS -->
+    <div class="ppanel" id="tab-ops">
+      <div class="psamples-grid">
+        <div class="psample"><span class="psample-emoji">📋</span><h4>Client Onboarding SOP</h4><p>End-to-end onboarding for a media company — week 1–4 milestones, touchpoints, responsibility matrix, and handoff checklist.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">📊</span><h4>Notion Operations Dashboard</h4><p>Multi-client ops hub — deliverables, deadlines, client health scores, and weekly priorities with relational databases throughout.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">🎓</span><h4>17-Slide Onboarding Deck (Canva)</h4><p>3-day compliance administrator training deck for a Philadelphia property management firm. Built in Canva with full BMG branding.</p><a href="https://www.canva.com/design/DAHKAkD8rS8/view" target="_blank" class="psample-link">View in Canva</a></div>
+        <div class="psample"><span class="psample-emoji">🔁</span><h4>Make.com → Notion CRM Flow</h4><p>Form submission automation from a landing page to a Notion pipeline database. Zero manual entry, set up in under 45 minutes.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">🗂️</span><h4>Compliance Filing System</h4><p>Regulatory tracking for a Philadelphia property firm — license renewals, COI cases, tax clearance flags, and letter templates.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">🏦</span><h4>Notion Financial Dashboard</h4><p>Family financial hub — 6 relational databases, auto-calculated Net Cash Flow and Net Worth, monthly dashboard with chart views.</p><a href="#" class="psample-link">Request sample</a></div>
+      </div>
+      <div class="share-bar"><div class="share-label">Share this view: <strong>Operations</strong></div><div class="share-url" id="su-ops"></div><button class="share-copy" onclick="copyLink('ops')">Copy Link</button></div>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="ppanel" id="tab-email">
+      <div class="psamples-grid">
+        <div class="psample"><span class="psample-emoji">🔁</span><h4>GHL 4-Campaign Architecture</h4><p>Full GoHighLevel automation setup for a DFY ops retainer — lead capture, nurture, consultation booking, and re-engagement campaigns.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">💄</span><h4>Lead Nurture Sequence (Aesthetics)</h4><p>5-part email sequence for a medical aesthetics clinic — education-first, moving leads from curious to booked consultation.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">🎁</span><h4>Mother's Day Campaign</h4><p>Full campaign — email copy + 10-page lead gen PDF. Emotional hook, strong CTA to booking page. Built in ReportLab + Canva.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">🎯</span><h4>Cold Outreach Templates</h4><p>LinkedIn and email outreach for a recruiting firm targeting US remote entrepreneurs. Direct, conversational, no fluff.</p><a href="#" class="psample-link">Request sample</a></div>
+        <div class="psample"><span class="psample-emoji">🌐</span><h4>Landing Page + Lead Capture</h4><p>Full GitHub Pages landing page with Make.com webhook → Notion pipeline. Services, pricing, and automated lead routing.</p><a href="https://nilsyynzon-source.github.io" target="_blank" class="psample-link">View live</a></div>
+        <div class="psample"><span class="psample-emoji">📰</span><h4>Newsletter Strategy Doc</h4><p>Monthly editorial calendar + tone guide for consistent email publishing. Covers Hormozi directness + Brunson storytelling mix.</p><a href="#" class="psample-link">Request sample</a></div>
+      </div>
+      <div class="share-bar"><div class="share-label">Share this view: <strong>Email &amp; Funnels</strong></div><div class="share-url" id="su-email"></div><button class="share-copy" onclick="copyLink('email')">Copy Link</button></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section id="credentials">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="tag">Credentials</div>
+      <h2>The proof behind<br/>the work.</h2>
+    </div>
+    <div class="creds-grid">
+
+      <div class="reveal">
+        <div class="cred-group-label">Education</div>
+        <div class="cred-items">
+          <div class="cred-item">
+            <span class="cred-badge">🎓</span>
+            <div class="cred-body">
+              <div class="cred-name">Bachelor of Arts — Political Science &amp; International Studies</div>
+              <div class="cred-issuer">De La Salle University — Dasmariñas</div>
+              <div class="cred-year">Philippines</div>
+            </div>
+          </div>
+          <div class="cred-item">
+            <span class="cred-badge">⚖️</span>
+            <div class="cred-body">
+              <div class="cred-name">Paralegal &amp; Legal Research Background</div>
+              <div class="cred-issuer">PEMO &amp; Private Criminal Law Practice</div>
+              <div class="cred-year">2016 – 2017</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div class="cred-group-label">English Proficiency</div>
+        <div class="cred-items">
+          <div class="cred-item">
+            <span class="cred-badge">🏅</span>
+            <div class="cred-body">
+              <div class="cred-name">C2 Proficient — EF SET Score 85/100</div>
+              <div class="cred-issuer">EF Standard English Test</div>
+              <div class="cred-year">Highest proficiency level</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="cred-group-label">Certifications &amp; Training</div>
+        <div class="cred-items">
+          <div class="cred-item">
+            <span class="cred-badge">🤖</span>
+            <div class="cred-body">
+              <div class="cred-name">AI-Powered Operations &amp; Automation</div>
+              <div class="cred-issuer">Claude AI · GoHighLevel · Make.com</div>
+              <div class="cred-year">Active practitioner · 2024 – Present</div>
+            </div>
+          </div>
+          <div class="cred-item">
+            <span class="cred-badge">📣</span>
+            <div class="cred-body">
+              <div class="cred-name">Social Media Strategy &amp; Content Creation</div>
+              <div class="cred-issuer">Meta Business Suite · Canva · TikTok Creator</div>
+              <div class="cred-year">Multi-platform · 2020 – Present</div>
+            </div>
+          </div>
+          <div class="cred-item">
+            <span class="cred-badge">🏡</span>
+            <div class="cred-body">
+              <div class="cred-name">Short-Term Rental Management</div>
+              <div class="cred-issuer">Airbnb · VRBO · PriceLabs · Hostaway</div>
+              <div class="cred-year">Active · 2022 – Present</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d3">
+        <div class="cred-group-label">Past Roles &amp; Industries</div>
+        <div class="cred-items">
+          <div class="cred-item">
+            <span class="cred-badge">💼</span>
+            <div class="cred-body">
+              <div class="cred-name">Business Development Officer</div>
+              <div class="cred-issuer">Eastwest Banking Corporation</div>
+              <div class="cred-year">Financial services · Philippines</div>
+            </div>
+          </div>
+          <div class="cred-item">
+            <span class="cred-badge">🏢</span>
+            <div class="cred-body">
+              <div class="cred-name">Team Leader · Senior Sales Specialist</div>
+              <div class="cred-issuer">ConvergePro BPO</div>
+              <div class="cred-year">BPO · US client accounts</div>
+            </div>
+          </div>
+          <div class="cred-item">
+            <span class="cred-badge">📧</span>
+            <div class="cred-body">
+              <div class="cred-name">Email Marketing &amp; Funnel Specialist</div>
+              <div class="cred-issuer">Jansson Logistics · Nicole Chan Photography</div>
+              <div class="cred-year">Email marketing · 2020 – 2022</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="wrap">
+    <div class="cta-inner">
+      <div class="reveal">
+        <div class="tag">Ready to Work Together?</div>
+        <h2>You run the business.<br/>I'll make sure it <em>keeps running.</em></h2>
+        <p>One retainer spot currently open. US service businesses, STR operators, and growing agencies — if your ops are held together by duct tape, let's fix that.</p>
+        <div class="cta-links">
+          <a href="index.html#contact" class="btn-primary">Start the Conversation</a>
+          <a href="https://www.linkedin.com/in/nilsyyyy" target="_blank" class="btn-ghost">LinkedIn Profile</a>
+        </div>
+      </div>
+      <div class="reveal reveal-d2" style="background:var(--card-bg);border:1px solid var(--border);padding:36px 32px">
+        <div class="hero-card-label" style="margin-bottom:20px">Why Nilsy</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;gap:14px;align-items:flex-start;font-size:14px;color:var(--muted)"><span style="font-size:18px;flex-shrink:0">⚡</span><span><strong style="color:var(--beige);font-weight:500">Autonomous execution</strong> — no handholding, no micromanaging, just results</span></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;font-size:14px;color:var(--muted)"><span style="font-size:18px;flex-shrink:0">🌎</span><span><strong style="color:var(--beige);font-weight:500">Any US timezone</strong> — EST to PST coverage, PHT-based</span></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;font-size:14px;color:var(--muted)"><span style="font-size:18px;flex-shrink:0">🤖</span><span><strong style="color:var(--beige);font-weight:500">AI-native operator</strong> — Claude and GHL are core to how I deliver work</span></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;font-size:14px;color:var(--muted)"><span style="font-size:18px;flex-shrink:0">🏅</span><span><strong style="color:var(--beige);font-weight:500">C2 English</strong> — EF SET 85/100, no communication friction</span></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;font-size:14px;color:var(--muted)"><span style="font-size:18px;flex-shrink:0">🛡️</span><span><strong style="color:var(--beige);font-weight:500">60-day guarantee</strong> — if it doesn't pay for itself, month 3 is free</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">N<span>.</span>Ynzon</div>
+    <div class="footer-links">
+      <a href="index.html">Hire Me</a>
+      <a href="systems-portfolio.html">Systems Portfolio</a>
+      <a href="https://www.linkedin.com/in/nilsyyyy" target="_blank">LinkedIn</a>
+      <a href="mailto:workwithme.nilsy@gmail.com">Email</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Nilsy Ynzon. All rights reserved.</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><div class="toast-title" id="toast-title">Done</div><div id="toast-msg"></div></div>
+
+<script>
+const TABS = ['str','social','ops','email'];
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+});
+
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+function switchTab(tab){
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
+  TABS.forEach(t=>document.getElementById('tab-'+t).classList.toggle('active',t===tab));
+  updateShareUrls();
+}
+
+function getBase(){return window.location.origin+window.location.pathname;}
+
+function updateShareUrls(){
+  TABS.forEach(t=>{
+    const el=document.getElementById('su-'+t);
+    if(el) el.textContent=getBase()+'#portfolio/'+t;
+  });
+}
+
+function copyLink(tab){
+  const url=getBase()+'#portfolio/'+tab;
+  navigator.clipboard.writeText(url).then(()=>{
+    showToast('Copied!','Shareable link is in your clipboard.');
+  }).catch(()=>{});
+}
+
+function handleHash(){
+  const h=window.location.hash;
+  if(h.startsWith('#portfolio')){
+    const parts=h.split('/');
+    const tab=parts[1]||'str';
+    if(TABS.includes(tab)) switchTab(tab);
+    setTimeout(()=>document.getElementById('portfolio').scrollIntoView({behavior:'smooth',block:'start'}),100);
+  }
+}
+
+function showToast(title,msg){
+  document.getElementById('toast-title').textContent='✦ '+title;
+  document.getElementById('toast-msg').textContent=msg;
+  const t=document.getElementById('toast');t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4500);
+}
+
+window.addEventListener('hashchange',handleHash);
+window.addEventListener('load',()=>{updateShareUrls();handleHash();});
+</script>
+</body>
+</html>
